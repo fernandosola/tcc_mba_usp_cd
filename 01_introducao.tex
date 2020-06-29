@@ -1,7 +1,5 @@
 
 
-
-
 No ambiente de negócios, o gerenciamento de reclamações de clientes tem se tornado um fator crítico de sucesso para manter um bom relacionamento e a fidelidade de clientes, conforme afirmam \citeonline{Coussement2008}. No ambiente da administração pública, onde o cidadão é o cliente, a prestação de serviços à população deve ser guiada por princípios como qualidade, eficiência e economicidade. Assim, diversos canais são disponibilizados aos cidadãos para entender melhor suas necessidades ou mesmo receber informações importantes sobre anomalias ou ilicitudes identificadas.
 
 Centenas de denúncias são enviadas diariamente através da Plataforma Integrada de Ouvidoria e Acesso à Informação (Fala.BR). Para que possam ser apuradas, primeiramente elas precisam ser triadas por uma equipe da \sigla{OGU}{Ouvidoria-Geral da União}, área integrante da \sigla{CGU}{Controladoria-Geral da União}, responsável por exercer as competências de órgão central do Sistema de Ouvidoria do Poder Executivo federal. O processo de triagem consiste em avaliar se há o mínimo de informações necessárias presente na denúncia e, caso haja, encaminhar a denúncia para que uma área competente realize a apuração dos fatos denunciados.
@@ -10,12 +8,11 @@ Em média, apenas 30\% das denúncias que chegam são consideradas aptas pelos e
 
 Assim, a criação de um modelo de classificação que atribua o grau de risco de aptidão para uma denúncia permite direcionar melhor os esforços das equipes responsáveis pelo processo de triagem. O objetivo desta pesquisa é propor uma metodologia que permita a implementação deste modelo nos processo de triagem de  denúncias da OGU. 
 
-O dados de denúncias recebidos através do sistema Fala.BR possuem poucos campos estruturados. A essência da denúncia está contida no texto escrito pelo cidadão e nos diversos anexos que, por vezes, são enviados em conjunto. Para uma pessoa, a análise de uma denúncia, na maioria das vezes é uma tarefa simples. Basicamente, o analista procura por elementos no texto que possam ser confirmados por consultas em sistemas oficiais como nomes de pessoas, números de cps, números de cnpj, endereços, órgãos, contratos, convênios, valores, além de outros elementos que possam remeter a uma certa gravidade sobre o problema exposto pelo cidadão. Entretanto, fazer este tipo de análise computacionalmente não é uma tarefa trivial. O \sigla{PLN}{Processamento de linguagem natural} é uma subárea da Ciência da Computação cujo o foco é a extração de informação. Este campo é vasto e é possível utilizar abordagens estatísticas como em \citeonline{Manning1999}
+\sigla*{CPF}{Cadastro Nacional de Pessoa Física}
+\sigla*{CNPJ}{Cadastro Nacional de Pessoa Jurídica}
 
-Como abordarei o problema?
+O dados de denúncias, recebidos através do sistema Fala.BR, possuem poucos campos estruturados. A essência da denúncia está contida no texto escrito pelo cidadão e nos diversos anexos que, por vezes, são enviados em conjunto. Para uma pessoa, a análise de uma denúncia, na maioria das vezes é uma tarefa simples. Basicamente, o analista procura por elementos no texto que possam ser confirmados por consultas em sistemas oficiais como nomes de pessoas, números de CPF , números de CNPJ, endereços, órgãos, contratos, convênios, valores, além de outros elementos que possam remeter a uma certa gravidade sobre o problema exposto pelo cidadão. 
 
-Para isso, será necessário compreender as diferentes formas de extrair informações de textos
+Realizar este tipo de análise computacionalmente não é uma tarefa trivial. O \sigla{PLN}{Processamento de Linguagem Natural} é uma subárea da Ciência da Computação cujo o foco é a extração de informação. Este campo é vasto e é possível, por exemplo, utilizar abordagens estatísticas como em \citeonline{Manning1999} ou, ainda, abordagens simbólicas como em \citeonline{Justeson1995}.
 
-
-Tema da Pesquisa ???
-Delimitação do assunto ???
+Assim, para que se possa formular uma metodologia eficaz, será necessário compreender as diferentes formas de extração de informação à partir de textos e, ainda, analisar as principais técnicas e/ou algoritmos que podem ser utilizados para criar um modelo que atenda às necessidades da área.
