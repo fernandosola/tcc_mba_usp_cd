@@ -1,3 +1,5 @@
+\section{Motiva\c{c}\~ao}
+
 No ambiente de negócios, o gerenciamento de reclamações de clientes tem se tornado um fator crítico de sucesso para manter um bom relacionamento e a fidelidade de clientes, conforme afirmam \citeonline{Coussement2008}. No ambiente da administração pública, onde o cidadão é o cliente, a prestação de serviços à população deve ser guiada por princípios como qualidade, eficiência e economicidade. Assim, diversos canais são disponibilizados aos cidadãos para entender melhor suas necessidades ou mesmo receber informações importantes sobre anomalias ou ilicitudes identificadas.
 
 Centenas de denúncias são enviadas diariamente através da Plataforma Integrada de Ouvidoria e Acesso à Informação (Fala.BR). Para que possam ser apuradas, primeiramente elas precisam ser triadas por uma equipe da \sigla{OGU}{Ouvidoria-Geral da União}, área integrante da \sigla{CGU}{Controladoria-Geral da União}, responsável por exercer as competências de órgão central do Sistema de Ouvidoria do Poder Executivo federal. O processo de triagem consiste em avaliar se há o mínimo de informações necessárias presente na denúncia e, caso haja, encaminhar a denúncia para que uma área competente realize a apuração dos fatos denunciados.
@@ -14,3 +16,21 @@ O dados de denúncias, recebidos através do sistema Fala.BR, possuem poucos cam
 Realizar este tipo de análise computacionalmente não é uma tarefa trivial. O \sigla{PLN}{Processamento de Linguagem Natural} é uma subárea da Ciência da Computação cujo o foco é a extração de informação. Este campo é vasto e é possível, por exemplo, utilizar abordagens estatísticas como em \citeonline{Manning1999} ou, ainda, abordagens simbólicas como em \citeonline{Justeson1995}.
 
 Assim, para que se possa formular uma metodologia eficaz, será necessário compreender as diferentes formas de extração de informação à partir de textos e, ainda, analisar as principais técnicas e/ou algoritmos que podem ser utilizados para criar um modelo que atenda às necessidades propostas.
+
+\section{Objetivos}
+
+Considerando diversos avanços na área de processamento de linguagem natural, este projeto de pesquisa propõe a criação de um modelo de classificação que atribua uma faixa de risco para novas denúncias.
+
+Objetivos específicos:
+a) Estudar formas de extração de features a partir de textos livres e dados não estruturados (KOWSARI, et al, 2019);
+b) Estudar os modelos de classificação mais comumente utilizados em processamento de linguagem natural (KADHIM, 2019);
+c) Avaliar as melhores formas de extração de features de acordo com os modelos pesquisados (DENG, et al, 2019);
+d) Comparar a performance entre diferentes modelos encontrados utilizando dados reais (HOSSIN, et al, 2015).
+
+
+\section{Metodologia}
+
+Será feito um levantamento bibliográfico sobre as formas de extração de features à partir de textos livres e dados não estruturados. A seguir, será realizado um levantamento bibliográfico sobre os modelos de classificação mais utilizados para problemas de processamento de linguagem natural. Em seguida, serão utilizadas em conjunto as principais formas de extração de features de texto e modelos. Cada modelo então será treinado com um dataset real obtido da base de dados do Fala.BR com rótulos atribuídos por especialistas da OGU. Por fim, serão calculadas, para cada combinação de features e modelo, as principais métricas utilizadas em problemas de classificação. Estas métricas serão utilizadas para avaliar, validar e comparar as performances atingidas.
+
+
+\section{Estrutura do Documento}
