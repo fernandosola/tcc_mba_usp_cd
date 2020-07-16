@@ -37,11 +37,14 @@ Ao analisar-se uma palavra dentro de uma sentença, sua posição e relação co
 
 
 
+
 \subsection{Word Embedding}
 
 Enquanto as técnicas relacionadas a BOW mapeiam as palavras em vetores esparsos e com valores discretos, as técnicas baseadas em \textit{word embedding} mapeiam sintaxe e semântica em um espaço de representação denominado \sigla{VSM}{Vector Space Model}. Este vetor é, normalmente, um vetor de baixa dimensionalidade e com valores reais. Palavras similares tendem a ter vetores similares e acabam sendo representadas muito próximas no VSM. A principal ideia por trás dessas técnicas é que se você pode prever o contexto em que uma palavra pode aparecer então você pode entender o significado da palavra \cite{goldberg2017neural}.
 
 O algoritmo word2vec proposto por \citeonline{mikolov2013efficient} utiliza esta abordagem e consegue capturar de forma muito eficiente diversas relações semânticas entre as palavras apenas observando suas coocorrências nos textos. O processo de aprendizado é realizado de forma que se deslize sobre o texto uma espécie de janela de tamanho "n" na qual as "n" palavras situadas nela são utilizadas para prever a próxima palavra. 
+
+Já o GloVe, utilza um mecanismo simiar ao word2vec, entretanto utiliza-se também de informações de contexto global de coocorrência de palavras produzindo vetores densos de palavras mais expressivos que em comparação aos gerados pelo word2vec \cite{pennington2014glove}.
 
 
 % word2vec, glove, elmo, bert
