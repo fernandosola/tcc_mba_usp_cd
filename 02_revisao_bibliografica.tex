@@ -14,9 +14,49 @@ Outra forma interessante de automatizar serviços aos cidadãos pode ser vista e
 
 O que todos os exemplos mencionados anteriormente têm em comum é o uso de informações não estruturadas, reportadas por cidadãos, acerca de assuntos diversos e em uma escala difícil de atender apenas com a análise manual realizada por pessoas. Ao mesmo tempo em que a necessidade de processar e compreender corretamente as demandas torna-se cada vez mais essencial para prestar um serviço melhor ao cidadão, o grande desafio em questão é justamente como fazer isso.
 
-A área de PLN, une diferentes disciplinas como ciência da computação, estatística e linguística computacional, com o objetivo de permitir que máquinas possam, de certa forma, reconhecer informações descritas em linguagem humana. Mais especificamente, ter a capacidade de processar léxica e semanticamente uma linguagem.
+As próximas seções trarão conceitos de NLP e IA que serão importantes para o entendimento das propostas elencadas neste trabalho.
 
-Há técnicas que permitem que utilize-se apenas o conteúdo léxico de uma linguagem para que se possa extrair informação relevante. Por exemplo, ao transformar-se um texto em um vetor de palavras e suas frequências, é possível comparar e agrupar diferentes textos apenas pelas coocorrências de palavras similares. Esta forma de representação de texto é geralmente descrita na literatura como \textit{Bag of Words}. Uma evolução destas representação é proposta por \citeonline{jones1972statistical}. Nesta abordagem, a autora propõe que a especificidade de um termo está diretamente associada a frequência deste termo em um dado documento e inversamente associada ao quão comum este termo é em uma coleção de documentos. Termos que ocorrem em todos os documentos são pouco importantes. Entretanto, termos que ocorrem com maior frequência em um determinado grupo de documentos são mais interessantes para discriminar um grupo de outro. Esta nova abordagem é o \sigla{TF-IDF}{\textit{Term Frequency–Inverse Document Frequency}}, ou a frequência do termo pelo inverso da frequência nos documentos e foi uma das técnicas mais utilizadas por buscadores na internet para a recuperação de informações através do uso de palavras-chave. Outras empregos comuns para esta técnica, ainda nos dias de hoje, devido a sua simplicidade e baixa necessidade computacional são nas áreas de classificação e clusterização de documentos que serão referenciados mais a frente.
+\section{Processamento de Linguagem Natural}
 
-Quando usa-se as abordagens descritas acima, é frequente o uso de determinados tratamentos no texto, com o objetivo de eliminar possíveis problemas de padronização além de remover ruídos que podem existir. Em qualquer linguagem, há palavras que não carregam muita informação independentemente do contexto em que estão inseridas. Este conjunto de palavras é comumente chamado de \textit{Stopwords}. Algumas \textit{stopwords} da língua portuguesa: de; a; o; que; e; do; da; em; um. Remover as \textit{stopwords} antes de determinadas aplicações de NLP é algo comum. Ainda na mesma linha, pode-se querer achar os radicais das palavras eliminando-se as suas flexões. Para esse propósito é comum o uso de algoritmos de \textit{Stemming} \textit{Lemmatization}. Enquanto \textit{Stemming} apenas corta sufixo e prefixos das palavras mantendo um radical, \textit{Lemmatization} tenta chegar a uma palavra válida no vocabulário e assim é um processo mais lento e que exige desambiguação em alguns casos \cite{Manning1999}.
+A área de PLN, une diferentes disciplinas como ciência da computação, estatística e linguística computacional, com o objetivo de permitir que máquinas possam, de certa forma, reconhecer informações descritas em linguagem humana. Mais especificamente, ter a capacidade de processar léxica e semanticamente uma linguagem. 
 
+
+\subsection{Bag of Words}
+
+Há técnicas que permitem que utilize-se apenas o conteúdo léxico de uma linguagem para que se possa extrair informação relevante. Por exemplo, ao transformar-se um texto em um vetor de palavras e suas frequências, é possível comparar e agrupar diferentes textos apenas pelas coocorrências de palavras similares. Esta forma de representação de texto é geralmente descrita na literatura como \sigla{BOW}{\textit{Bag of Words}}. Uma evolução desta representação é proposta por \citeonline{jones1972statistical}. Nesta abordagem, a autora propõe que a especificidade de um termo está diretamente associada a frequência deste termo em um dado documento e inversamente associada ao quão comum este termo é em uma coleção de documentos. Termos que ocorrem em todos os documentos são pouco importantes. Entretanto, termos que ocorrem com maior frequência em um determinado grupo de documentos são mais interessantes para discriminar um grupo de outro. Esta nova abordagem é o \sigla{TF-IDF}{\textit{Term Frequency–Inverse Document Frequency}}, ou a frequência do termo pelo inverso da frequência nos documentos e foi uma das técnicas mais utilizadas por buscadores na internet para a recuperação de informações através do uso de palavras-chave. Outros empregos comuns para esta técnica, ainda nos dias de hoje, devido a sua simplicidade e baixa necessidade computacional são nas áreas de classificação e clusterização de documentos que serão referenciados mais a frente.
+
+Quando usa-se as abordagens descritas acima, é frequente o uso de determinados tratamentos no texto, com o objetivo de eliminar possíveis problemas de padronização além de remover ruídos que podem existir. Em qualquer linguagem, há palavras que não carregam muita informação independentemente do contexto em que estão inseridas. Este conjunto de palavras é comumente chamado de \textit{Stopwords}. Algumas \textit{stopwords} da língua portuguesa: de; a; o; que; e; do; da; em; um. Remover as \textit{stopwords} antes de determinadas aplicações de NLP é algo comum. Ainda na mesma linha, pode-se querer achar os radicais das palavras eliminando-se as suas flexões. Para esse propósito é comum o uso de algoritmos de \textit{Stemming} \textit{Lemmatization}. Enquanto \textit{Stemming} apenas corta sufixos e prefixos das palavras mantendo um radical, \textit{Lemmatization} tenta chegar a uma palavra válida no vocabulário e assim é um processo mais lento e que exige desambiguação em alguns casos \cite{Manning1999}.
+
+O que foi discutido até aqui, apenas relaciona textos utilizando pesos atribuídos a palavras no documento sem que sua ordem seja considerada. Dessa forma, apesar de haver uma certa relação que permanece no todo, utilizando estas abordagens, perdemos muita informação relacionada ao contexto em que as palavras foram utilizadas, tanto em relação ao conteúdo quanto em relação ao papel da palavra na estrutura da linguagem. Assim, as próximas técnicas discutidas tentam preservar alguns tipos de informações capturadas de cada palavra dentro de sua sentença. Ou seja, à partir de agora há uma certa captura de aspectos sintáticos e semânticos.
+
+\subsection{Part-of-Speech Tagging}
+
+Ao analisar-se uma palavra dentro de uma sentença, sua posição e relação com as outras palavras lhe conferem um classe gramatical. Conhecer as diferentes funções que uma classe gramatical pode exercer quando está disposta em uma sentença pode ser uma vantagem para resolver ambiguidades da linguagem. A marcação gramatical ou \sigla{POST}{\textit{Part-of-Speech Tagging}} é essencial em algumas tarefas de NLP como o reconhecimento de entidades nomeadas ou \sigla{NER}{\textit{Named Entity Recognition}}. Saber a classe gramatical das palavras em uma sentença pode ser crucial para saber se estamos falando de um nome de pessoa ou de um nome de uma rua no texto, por exemplo \cite{Manning1999}.
+
+\subsection{Named Entity Recognition}
+
+\subsection{Word Embedding}
+
+Enquanto as técnicas relacionadas a BOW mapeiam as palavras em vetores esparsos e com valores discretos, as técnicas baseadas em \textit{word embedding} mapeiam sintaxe e semântica em um espaço de representação denominado \sigla{VSM}{Vector Space Model}. Este vetor é, normalmemente, um vetor de baixa dimensionalidade e com valores reais. Palavras similares tendem a ter vetores similares e acabam sendo representadas muito próximas no VSM.
+
+A principal ideia por trás dessas técnicas é que se você pode prever o contexto em que uma palavra pode aparecer então você pode entender o significado da palavra.
+
+\begin{quote}
+You shall know a word by the company it keeps (Firth, J. R. 1957:11)    
+\end{quote}
+
+\cite{}
+
+%
+In contrast to local representations, in which entities are represented as
+discrete symbols and the interactions between entities are encoded as a set of discrete relations between symbols forming a graph, in distributed representations each entity is instead represented as a vector of value (“a pattern of activations”), and the meaning of the entity and its relation to other entities are captured by the activations in the vector, and the similarities between different vectors. In the context of language processing, it means that words (and sentences) should not be mapped to discrete dimensions but rather mapped to a shared low dimensional space, where ²Note that all the updates during gradient-based training are additive, and so without regularization, updating E during training and keeping E fixed but updating  and looking at E C  will result in the same final embeddings. e approaches only differ when regularization is applied.118 10. PRE-TRAINED WORD REPRESENTATIONS each word will be associated with a d-dimensional vector, and the meaning of the word will be captured by its relation to other words and the activation values in its vector. e natural language processing community has a tradition in thinking in terms of distributional semantics, in which a meaning of a word could be derived from its distribution in a corpus, i.e., from the aggregate of the contexts in which it is being used. Words that tend to occur in similar contexts tend to have similar meanings. ese two approaches to representing words—in terms of patterns of activations that are learned in the context of a larger algorithm and in terms of co-occurrence patterns with other words or syntactic structures, give rise to seemingly very different views of word representations, leading to different algorithmic families and lines of thinking
+%
+
+
+\subsection{BERT}
+
+\section{Classificação}
+
+% clustering
+
+% classificação
