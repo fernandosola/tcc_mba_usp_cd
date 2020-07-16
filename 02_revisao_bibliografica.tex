@@ -35,28 +35,13 @@ Ao analisar-se uma palavra dentro de uma sentença, sua posição e relação co
 
 \subsection{Named Entity Recognition}
 
+
+
 \subsection{Word Embedding}
 
-Enquanto as técnicas relacionadas a BOW mapeiam as palavras em vetores esparsos e com valores discretos, as técnicas baseadas em \textit{word embedding} mapeiam sintaxe e semântica em um espaço de representação denominado \sigla{VSM}{Vector Space Model}. Este vetor é, normalmemente, um vetor de baixa dimensionalidade e com valores reais. Palavras similares tendem a ter vetores similares e acabam sendo representadas muito próximas no VSM.
+Enquanto as técnicas relacionadas a BOW mapeiam as palavras em vetores esparsos e com valores discretos, as técnicas baseadas em \textit{word embedding} mapeiam sintaxe e semântica em um espaço de representação denominado \sigla{VSM}{Vector Space Model}. Este vetor é, normalmente, um vetor de baixa dimensionalidade e com valores reais. Palavras similares tendem a ter vetores similares e acabam sendo representadas muito próximas no VSM. A principal ideia por trás dessas técnicas é que se você pode prever o contexto em que uma palavra pode aparecer então você pode entender o significado da palavra \cite{goldberg2017neural}.
 
-A principal ideia por trás dessas técnicas é que se você pode prever o contexto em que uma palavra pode aparecer então você pode entender o significado da palavra.
-
-\begin{quote}
-You shall know a word by the company it keeps (Firth, J. R. 1957:11)    
-\end{quote}
-
-\cite{}
-
-%
-In contrast to local representations, in which entities are represented as
-discrete symbols and the interactions between entities are encoded as a set of discrete relations between symbols forming a graph, in distributed representations each entity is instead represented as a vector of value (“a pattern of activations”), and the meaning of the entity and its relation to other entities are captured by the activations in the vector, and the similarities between different vectors. In the context of language processing, it means that words (and sentences) should not be mapped to discrete dimensions but rather mapped to a shared low dimensional space, where ²Note that all the updates during gradient-based training are additive, and so without regularization, updating E during training and keeping E fixed but updating  and looking at E C  will result in the same final embeddings. e approaches only differ when regularization is applied.118 10. PRE-TRAINED WORD REPRESENTATIONS each word will be associated with a d-dimensional vector, and the meaning of the word will be captured by its relation to other words and the activation values in its vector. e natural language processing community has a tradition in thinking in terms of distributional semantics, in which a meaning of a word could be derived from its distribution in a corpus, i.e., from the aggregate of the contexts in which it is being used. Words that tend to occur in similar contexts tend to have similar meanings. ese two approaches to representing words—in terms of patterns of activations that are learned in the context of a larger algorithm and in terms of co-occurrence patterns with other words or syntactic structures, give rise to seemingly very different views of word representations, leading to different algorithmic families and lines of thinking
-%
+O algoritmo word2vec proposto por \cite{} conseguiram 
 
 
-\subsection{BERT}
-
-\section{Classificação}
-
-% clustering
-
-% classificação
+% word2vec, glove, elmo, bert
