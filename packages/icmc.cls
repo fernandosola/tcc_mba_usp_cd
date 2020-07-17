@@ -395,7 +395,7 @@
 }
 
 % Comando para definicao do nome e sobrenome do autor
-\renewcommand\autor[2][Nome para Referencia]{
+\renewcommand\autor[2][Fernando Sola Pereira]{
     
     \StrCount{#2}{\space}[\nbmatch]%
     \StrCut[\nbmatch]{#2}{\space}\strfirstautor\strsecondautor
@@ -1579,7 +1579,7 @@
     \setboolean{carimbo-folha-rosto}{false}
     \IfLangPortuguese{
         \begin{otherlanguage}{english}
-            \imprimirfolhaderosto{}
+            % \imprimirfolhaderosto{}
         \end{otherlanguage}
     }{
         \begin{otherlanguage}{brazil}
