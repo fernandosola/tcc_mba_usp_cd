@@ -1,0 +1,58 @@
+\section{Considerações Iniciais}
+
+Neste capítulo pretende-se detalhar melhor o problema a ser resolvido. Posteriormente, será descrito todo o \textit{pipeline} de coleta e tratamentos dos dados para a montagem do \textit{dataset} que será utilizado para treinamento e avaliação do modelo proposto.
+
+Ainda neste capítulo, serão descritos os experimentos realizados, métricas utilizadas e o modelo escolhido. Por fim, serão exibidos alguns resultados obtidos, a partir da utilização do modelo selecionado, em dados reais.
+
+\section{Detalhamento do Problema}
+
+Ao chegar uma nova denúncia através do sistema FalaBR, da OGU, uma equipe de pessoas atua para avaliar as informações presentes na denúncia e decidir se a denúncia está apta a ser apurada ou não. Ou seja, a avaliação da equipe diz respeito a elementos presentes na denúncia que permitem uma apuração dos fatos relatados.
+
+Em geral, estes elementos estão centrados em informações como CPF, CNPJ, Contratos e Convênios entre órgãos públicos e empresas privadas, materialidade (valores monetários descritos na denúncia ou identificados nos contratos e convênios). Com tais informações, a equipe de triagem de denúncias decide se deverá haver apuração (denúncia apta) ou não (denúncia não apta).
+
+Uma grande parte deste trabalho pode ser automatizado. Assim, as consultas realizadas pela equipe, em diversos sistemas, podem ser substituídas por um processo automatizado, desde que seja possível identificar tais entidades no conteúdo das denúncias. Além disso, durante o processo de triagem, a equipe atribui uma nota de 0 a 100 (de 10 em 10) para definir o quão apta é uma denúncia. Por definições internas, notas acima de entre 0 e 50 são consideradas não aptas e notas entre 60 e 100 são consideradas aptas. Tais notas podem ser utilizadas como rótulo para um aprendizado supervisionado.
+
+Assim, sendo possível montar um conjunto de variáveis adequadas é possível propor a criação de um modelo para inferir notas às novas denúncias automaticamente.
+
+O primeiro problema a ser resolvido, então, é a coleta e preparação dos dados. 
+A próxima seção detalha os desafios enfrentados e como foram resolvidos.
+
+\section{Coleta de Dados}
+
+O processo de coleta e análise de dados para utilizar em treinamentos de aprendizado de máquina, geralmente, é composto por uma fase de análise exploratória. Em muitos casos, os dados estão estruturados e o maior trabalho é uma análise onde verifica-se duplicidades, dados faltantes, outliers e outras peculiaridades comuns em dados provenientes de sistemas informatizados. 
+Já, no caso deste trabalho, não há, diretamente, dados estruturados. As únicas informações que podem ser obtidas são o texto da denúncia e os anexos, quando informados. Assim, a análise das denúncias e o seu uso para um aprendizado supervisionado devem abranger técnicas de NLP.
+
+Como já foi mencionado, há rótulos sendo atribuídos às denúncias. Assim, o \textit{dataset} que será utilizado contém 1281 registros contendo informações da denúncia, anexos e a informação de grau de aptidão. Estes registros compreendem todas as denúncias cadastradas entre 04/12/2019 e 24/04/2020.
+
+
+
+TODO: incluir uma visão geral sobre quantitativo de denúncias
+
+\subsection{Extração de Textos dos Anexos}
+
+Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grade de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo e escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
+
+TODO: quantitativo de anexos, tipos de anexos
+
+Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos PDF ou quando o arquivo é uma imagem.
+
+Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um serviço e utilizou-se uma biblioteca em python para realizar as chamadas ao serviço passando os arquivos que deveriam ter o conteúdo extraído.
+
+\subsection{Extração de Dados Estruturados}
+
+\subsection{Expansão das Informações}
+
+\subsection{Qualificação dos Dados Estruturados Encontrados}
+
+\subsection{Preparação do \textit{Dataset}}
+
+\section{Experimentos Propostos}
+
+\section{Escolha das Métricas}
+
+\section{Resultados dos Testes}
+
+\section{Modelo Escolhido}
+
+\section{Desempenho do Modelo em Produção}
+
