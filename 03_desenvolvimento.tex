@@ -60,7 +60,17 @@ Apesar de haver diversas formas de reconhecimento de entidades nomeadas, por que
 
 Um especialista da OGU, ao analisar uma denúncia, pesquisa informações a partir das informações citadas. Da mesma forma, a etapa de expansão compreende todos os dados estruturados, derivados daqueles encontrados na etapa anterior. 
 
-Por exemplo, para um CPF citado, pode-se avaliar em quais CNPJs este CPF consta como sócio. Em um CNPJ pode-se avaliar os sócios. Em contratos ou convênios pode-se querer avaliar os participantes (órgãos e CNPJs), além do valor envolvido no ato administrativo. Para um nome de pessoa citado, pode-se tentar buscar o CPF caso não haja homônimos na base de CPFs da Receita Federal. Estas informações são extraídas e armazenadas mantendo-se a hierarquia 
+Por exemplo, para um CPF citado, pode-se avaliar em quais CNPJs este CPF consta como sócio. Em um CNPJ pode-se avaliar os sócios. Em contratos ou convênios pode-se querer avaliar os participantes (órgãos e CNPJs), além do valor envolvido no ato administrativo. Para um nome de pessoa citado, pode-se tentar buscar o CPF caso não haja homônimos na base de CPFs da Receita Federal. Estas informações são extraídas e armazenadas mantendo-se a hierarquia, ou seja, um CNPJ extraído por que um CPF aparece no quadro societário possui um apontamento para o CPF que o originou e a relação ``é sócio de'' é preservada. Além disso, todos os dados estruturados preservam o identificador da denúncia a qual foram extraídos.
+
+\begin{figure}[htbp]
+\hypertarget{ig_00200_extracao_expansao}{
+    \caption{Processo de extração e expansão de dados estruturados}\label{ig_00200_extracao_expansao}
+    \begin{center}
+        \includesvg{images/fig_00200_extracao_expansao.svg}
+    \end{center}
+}
+\legend{Fonte: Autor.}
+\end{figure}
 
 \subsection{Qualificação dos Dados Estruturados Encontrados}
 
