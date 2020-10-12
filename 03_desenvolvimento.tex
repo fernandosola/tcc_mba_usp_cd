@@ -24,17 +24,24 @@ Já, no caso deste trabalho, não há, diretamente, dados estruturados. As únic
 
 Como já foi mencionado, há rótulos sendo atribuídos às denúncias. Assim, o \textit{dataset} que será utilizado contém 1281 registros contendo informações da denúncia, anexos e a informação de grau de aptidão. Estes registros compreendem todas as denúncias cadastradas entre 04/12/2019 e 24/04/2020.
 
-
+\begin{figure}[h]
+\centering
+\caption{Quantidade de denúncias por rótulo}
+\label{fig:fig_00100_quantidade_denuncias}
+\makebox[\columnwidth]{
+\includegraphics[width=1.20\columnwidth]{images/fig_00100_quantidade_denuncias.png}
+}
+\end{figure}
 
 TODO: incluir uma visão geral sobre quantitativo de denúncias
 
 \subsection{Extração de Textos dos Anexos}
 
-Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grade de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo e escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
+Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grade de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo. Por outro lado, escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
 
 TODO: quantitativo de anexos, tipos de anexos
 
-Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos PDF ou quando o arquivo é uma imagem.
+Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos como PDF, excel, doc, entre outros ou quando o arquivo é uma imagem.
 
 Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um serviço e utilizou-se uma biblioteca em python para realizar as chamadas ao serviço passando os arquivos que deveriam ter o conteúdo extraído.
 
