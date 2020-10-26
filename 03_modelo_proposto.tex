@@ -25,12 +25,10 @@ Já, no caso deste trabalho, não há, diretamente, dados estruturados. As únic
 Como já foi mencionado, há rótulos sendo atribuídos às denúncias. Assim, o \textit{dataset} que será utilizado contém 1281 registros contendo informações da denúncia, anexos e a informação de grau de aptidão. Estes registros compreendem todas as denúncias cadastradas entre 04/12/2019 e 24/04/2020.
 
 \begin{figure}[htbp]
-\hypertarget{fig_00100_quantidade_denuncias}{
-    \caption{Quantidade de denúncias por rótulo}\label{fig_00100_quantidade_denuncias}
-    \begin{center}
-        \includegraphics[width=\columnwidth]{images/fig_00100_quantidade_denuncias.png}
-    \end{center}
-}
+\caption{Quantidade de denúncias por rótulo}\label{fig_00100_quantidade_denuncias}
+\begin{center}
+    \includegraphics[width=\columnwidth]{images/fig_00100_quantidade_denuncias.png}
+\end{center}
 \legend{Fonte: Autor.}
 \end{figure}
 
@@ -63,24 +61,32 @@ Um especialista da OGU, ao analisar uma denúncia, pesquisa informações a part
 Por exemplo, para um CPF citado, pode-se avaliar em quais CNPJs este CPF consta como sócio. Em um CNPJ pode-se avaliar os sócios. Em contratos ou convênios pode-se querer avaliar os participantes (órgãos e CNPJs), além do valor envolvido no ato administrativo. Para um nome de pessoa citado, pode-se tentar buscar o CPF caso não haja homônimos na base de CPFs da Receita Federal. Estas informações são extraídas e armazenadas mantendo-se a hierarquia, ou seja, um CNPJ extraído por que um CPF aparece no quadro societário possui um apontamento para o CPF que o originou e a relação ``é sócio de'' é preservada. Além disso, todos os dados estruturados preservam o identificador da denúncia a qual foram extraídos.
 
 \begin{figure}[htbp]
-\hypertarget{fig_00200_extracao_expansao}{
-    \caption{Quantidade de denúncias por rótulo}\label{fig_00200_extracao_expansao}
+    \caption{Exemplo de extração e expansão de dados estruturados}\label{fig_00200_extracao_expansao}
     \begin{center}
         \includegraphics[width=\columnwidth]{images/fig_00200_extracao_expansao.png}
     \end{center}
-}
 \legend{Fonte: Autor.}
 \end{figure}
 
+A \autoref{fig_00200_extracao_expansao} apresenta um exemplo fictício no qual o processo de extração encontra um CPF. A partir deste CPF dois CNPJs, nos quais o CPF pertence ao quadro societário, são encontrados. Para cada CNPJ encontrado busca-se os CPFs dos demais sócios. Assim, os dados estruturados provenientes da extração são definidos como nível 1, seus dados estruturados derivados nível 2 e assim por diante. Avaliou-se que, acima do nível 3, a quantidade de dados estruturados aumentaria demasiadamente e os mesmos teriam pouca relevância. Assim, na base de dados utilizada para este trabalho serão expandidos e trabalhados apenas até o terceiro nível.
+
 \subsection{Qualificação dos Dados Estruturados Encontrados}
+
+O processo de qualificação tem o objetivo extrair outras características para cada dado estruturado encontrado, independentemente do nível. Assim, para um CPF encontrado, por exemplo, pode-se extrair informações como: é ou não servidor público federal, foi demitido da administração pública federal, possui processo administrativo disciplinar, é pessoa exposta politicamente, fez doações a partidos políticos (valor total das doações), entre outras. 
+
+No caso de um CNPJ, como exemplo, podemos verificar se a empresa consta no \sigla{CADIN}{Cadastro Informativo de Créditos não Quitados do Setor Público Federal}, \sigla{CEPIM}{Cadastro de Entidades Privadas sem Fins Lucrativos}, se já teve outras sanções feitas pela administração pública federal, se a empresa fez doações a partidos políticos, entre outras.
 
 \subsection{Preparação do \textit{Dataset}}
 
+Esta etapa consiste na consolidação, em \textit{features}, de todas as informações encontradas nas etapas anteriores. Assim, realiza-se um agrupamento por origem de informações. Algumas características como materialidade são somadas outras como CPF de servidor público são contabilizadas. Dessa forma, para cada denúncia, há um registro com uma quantidade grande de colunas nas quais consolida-se todas as informações encontradas nas etapas anteriores. O quadro XXX apresenta a lista de todas as informações que são extraídas, bem como uma explicação de sua origem e forma de consolidação. Por fim, inclui-se o rótulo.
+
+\textbf{TODO: quadro com todas as features, comentadas, extraídas a partir de dados estruturados}
+
+Com o dataset finalizado podemos iniciar a avaliação dos dados para a proposição de um modelo de classificação.
+
 \section{Experimentos Propostos}
 
-\section{Escolha das Métricas}
-
-\section{Resultados dos Testes}
+\section{Resultados dos Experimentos}
 
 \section{Modelo Escolhido}
 
