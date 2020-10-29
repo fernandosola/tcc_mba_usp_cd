@@ -22,7 +22,7 @@ A próxima seção detalha os desafios enfrentados e como foram resolvidos.
 O processo de coleta e análise de dados para utilizar em treinamentos de aprendizado de máquina, geralmente, é composto por uma fase de análise exploratória. Em muitos casos, os dados estão estruturados e o maior trabalho é uma análise onde verifica-se duplicidades, dados faltantes, outliers e outras peculiaridades comuns em dados provenientes de sistemas informatizados. 
 Já, no caso deste trabalho, não há, diretamente, dados estruturados. As únicas informações que podem ser obtidas são o texto da denúncia e os anexos, quando informados. Assim, a análise das denúncias e o seu uso para um aprendizado supervisionado devem abranger técnicas de NLP.
 
-Como já foi mencionado, há rótulos sendo atribuídos às denúncias. Assim, o \textit{dataset} que será utilizado contém 1281 registros contendo informações da denúncia, anexos e a informação de grau de aptidão. Estes registros compreendem todas as denúncias cadastradas entre 04/12/2019 e 24/04/2020.
+Como já foi mencionado, há rótulos sendo atribuídos às denúncias. Assim, o \textit{dataset} que será utilizado contém 1489 registros contendo informações da denúncia, anexos e a informação de grau de aptidão. Estes registros compreendem todas as denúncias cadastradas e que possuem rótulo atribuído entre 04/12/2019 e 23/06/2020.
 
 \begin{figure}[htbp]
 \caption{Quantidade de denúncias por rótulo}\label{fig_00100_quantidade_denuncias}
@@ -38,9 +38,24 @@ Conforme pode ser visto na \autoref{fig_00100_quantidade_denuncias}, a maior par
 
 Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grade de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo. Por outro lado, escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
 
-\textbf{TODO: quantitativo de anexos, tipos de anexos}
+\textbf{TODO: melhorar o texto sobre os anexos, explicar sobre conteúdos dos anexos e decisão sobre necessidade de OCR}
 
-Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos dos tipo pdf, xls, doc, entre outros ou quando o arquivo é uma imagem.
+Existe, no conjunto de dados avaliado por este trabalho, um total de 1801 anexos. A \autoref{fig_00050_quantidade_anexos_tipo_arquivo}, apresenta a quantidade de anexos de acordo com o tipo de arquivo.
+
+\begin{figure}[htbp]
+\caption{Quantidade de anexos por tipo de arquivo}
+\label{fig_00050_quantidade_anexos_tipo_arquivo}
+\begin{center}
+\includegraphics[width=\columnwidth]{images/fig_00050_quantidade_anexos_tipo_arquivo.png}
+\end{center}
+\legend{Fonte: Autor.}
+\end{figure}
+
+\textbf{TODO: parágrafo sobre quantidade de anexos por denúncia - e histograma com faixas 0 a 5 anexos, 6 a 10 ...}
+
+\textbf{TODO: parágrafo sobre descritiva de anexos por denúncia ...}
+
+Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda, é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos dos tipo pdf, xls, doc, entre outros ou quando o arquivo é uma imagem.
 
 Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um serviço e utilizou-se uma biblioteca em python para realizar as chamadas ao serviço passando os arquivos que deveriam ter o conteúdo extraído.
 
@@ -56,35 +71,125 @@ Apesar de haver diversas formas de reconhecimento de entidades nomeadas, por que
 
 \subsection{Expansão das Informações}
 
-Um especialista da OGU, ao analisar uma denúncia, pesquisa informações a partir das informações citadas. Da mesma forma, a etapa de expansão compreende todos os dados estruturados, derivados daqueles encontrados na etapa anterior. 
+Especialistas da OGU, ao analisar uma denúncia, pesquisam informações a partir do conteúdo das denúncias. Da mesma forma, a etapa de expansão compreende todos os dados estruturados, derivados daqueles encontrados na etapa anterior. 
 
 Por exemplo, para um CPF citado, pode-se avaliar em quais CNPJs este CPF consta como sócio. Em um CNPJ pode-se avaliar os sócios. Em contratos ou convênios pode-se querer avaliar os participantes (órgãos e CNPJs), além do valor envolvido no ato administrativo. Para um nome de pessoa citado, pode-se tentar buscar o CPF caso não haja homônimos na base de CPFs da Receita Federal. Estas informações são extraídas e armazenadas mantendo-se a hierarquia, ou seja, um CNPJ extraído por que um CPF aparece no quadro societário possui um apontamento para o CPF que o originou e a relação ``é sócio de'' é preservada. Além disso, todos os dados estruturados preservam o identificador da denúncia a qual foram extraídos.
 
 \begin{figure}[htbp]
-    \caption{Exemplo de extração e expansão de dados estruturados}\label{fig_00200_extracao_expansao}
+    \caption{Exemplo de extração e expansão de dados estruturados}
+    \label{fig_00200_extracao_expansao}
     \begin{center}
         \includegraphics[width=\columnwidth]{images/fig_00200_extracao_expansao.png}
     \end{center}
 \legend{Fonte: Autor.}
 \end{figure}
 
-A \autoref{fig_00200_extracao_expansao} apresenta um exemplo fictício no qual o processo de extração encontra um CPF. A partir deste CPF dois CNPJs, nos quais o CPF pertence ao quadro societário, são encontrados. Para cada CNPJ encontrado busca-se os CPFs dos demais sócios. Assim, os dados estruturados provenientes da extração são definidos como nível 1, seus dados estruturados derivados nível 2 e assim por diante. Avaliou-se que, acima do nível 3, a quantidade de dados estruturados aumentaria demasiadamente e os mesmos teriam pouca relevância. Assim, na base de dados utilizada para este trabalho serão expandidos e trabalhados apenas até o terceiro nível.
+A \autoref{fig_00200_extracao_expansao} apresenta um exemplo fictício no qual o processo de extração encontra um CPF. A partir deste CPF dois CNPJs, nos quais o CPF pertence ao quadro societário, são encontrados. Para cada CNPJ encontrado busca-se os CPFs dos demais sócios. Assim, os dados estruturados provenientes da extração são definidos como nível 1, seus dados estruturados derivados nível 2 e assim por diante. Avaliou-se que, acima do nível 3, a quantidade de dados estruturados aumentaria demasiadamente e os mesmos teriam pouca relevância. Assim, na base de dados utilizada para este trabalho serão expandidos e trabalhados apenas informações até o terceiro nível.
 
 \subsection{Qualificação dos Dados Estruturados Encontrados}
 
-O processo de qualificação tem o objetivo extrair outras características para cada dado estruturado encontrado, independentemente do nível. Assim, para um CPF encontrado, por exemplo, pode-se extrair informações como: é ou não servidor público federal, foi demitido da administração pública federal, possui processo administrativo disciplinar, é pessoa exposta politicamente, fez doações a partidos políticos (valor total das doações), entre outras. 
+O processo de qualificação tem por objetivo extrair outras características para cada dado estruturado encontrado, independentemente do nível. Assim, para um CPF encontrado, por exemplo, pode-se extrair informações como: é ou não servidor público federal, foi demitido da administração pública federal, possui processo administrativo disciplinar, é pessoa exposta politicamente, fez doações a partidos políticos (valor total das doações), entre outras. 
 
 No caso de um CNPJ, como exemplo, podemos verificar se a empresa consta no \sigla{CADIN}{Cadastro Informativo de Créditos não Quitados do Setor Público Federal}, \sigla{CEPIM}{Cadastro de Entidades Privadas sem Fins Lucrativos}, se já teve outras sanções feitas pela administração pública federal, se a empresa fez doações a partidos políticos, entre outras.
 
+As qualificações encontradas podem ser utilizadas como features das denúncias.
+
 \subsection{Preparação do \textit{Dataset}}
 
-Esta etapa consiste na consolidação, em \textit{features}, de todas as informações encontradas nas etapas anteriores. Assim, realiza-se um agrupamento por origem de informações. Algumas características como materialidade são somadas outras como CPF de servidor público são contabilizadas. Dessa forma, para cada denúncia, há um registro com uma quantidade grande de colunas nas quais consolida-se todas as informações encontradas nas etapas anteriores. O quadro XXX apresenta a lista de todas as informações que são extraídas, bem como uma explicação de sua origem e forma de consolidação. Por fim, inclui-se o rótulo.
+Esta etapa consiste na consolidação, em \textit{features} ou características, de todas as informações encontradas nas etapas anteriores. Assim, realiza-se um agrupamento por origem de informações. Algumas características como materialidade são somadas outras como CPF de servidor público são contabilizadas. Dessa forma, para cada denúncia, há um registro com uma quantidade grande de colunas nas quais consolida-se todas as informações encontradas nas etapas anteriores. Por fim, inclui-se o rótulo. A \autoref{tab_00100_visao_geral_dataset} apresenta uma visão em alto nível de como o \textit{dataset} é montado bem como uma explicação da origem de algumas \textit{features} e sua forma de consolidação. 
 
-\textbf{TODO: quadro com todas as features, comentadas, extraídas a partir de dados estruturados}
 
-Com o dataset finalizado podemos iniciar a avaliação dos dados para a proposição de um modelo de classificação.
+\begin{table}[htbp]
+\caption{Visão geral do dataset após o processamento das denúncias}
+\label{tab_00100_visao_geral_dataset}
+\tiny
+\centering
+\begin{tabular}{p{0.175\columnwidth}p{0.55\columnwidth}p{0.2\columnwidth}}
+\toprule
+     Feature &
+     Descrição &
+     Forma de Consolidação \\
+\midrule
+
+    grau\_aptidao &
+    Rótulo definido pelos especialistas &
+    Único por denúncia \\
+      
+    txt\_denuncia &
+    Conteúdo da denúncia &
+    Único por denúncia \\
+    
+    txt\_anexos & 
+    Conteúdo textual extraído dos anexos 
+    &  Único por denúncia \\
+    
+    nome\_em\_denuncia 
+    &  Nomes de pessoas encontrados no texto ou anexos da denúncia. São contabilizados apenas nomes existentes na tabela de pessoa física da receita federal
+    & Contagem de ocorrências\\
+    
+    cpf\_em\_texto\_denuncia
+    &  CPFs encontrados no texto ou anexos da denúncia
+    & Contagem de ocorrências \\
+    
+    materialidade
+    & Referências a valores monetários encontrados diretamente no texto da denúncia e seus anexos ou em contratos e convênios extraídos das mesmas
+    & Soma dos valores \\
+    
+    denuncia\_anonima
+    & Indicador se a denúncia é anônima ou não
+    & Binário (1 ou 0) \\
+    
+    ... 
+    &  ... 
+    & ... \\
+    
+    palavras\_fortes
+    &  Palavras fortes que possam levar ao entendimento de que há ato suspeito sendo denunciado (fraude, ilegal, desvio, superfaturamento, etc.)
+    & Contagem de ocorrências \\
+    
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+
+Além das 7 \textit{features} e da variável alvo (rótulo) detalhadas na \autoref{tab_00100_visao_geral_dataset}, são extraídas outras 77 \textit{features}. O presente trabalho não detalhará as demais por questões de sigilo, considerando que a metodologia proposta será adotada na instituição em que o autor é vinculado.
+
+\#TODO: detalhar quantidade de dados estruturados por nível encontrados para as denuncias
+
+\#TODO: fazer uma tabela/quadro com informações descritivas min, mediana, media, max de dados estruturados por denúncia
+
+Com o dataset finalizado pode-se iniciar a avaliação dos dados para a proposição de um modelo de classificação.
 
 \section{Experimentos Propostos}
+
+Nesta seção, serão exploradas algumas possibilidades de uso das informações extraídas para construir classificadores. Desta forma, identifica-se algumas alternativas óbvias que devem ser avaliadas em um primeiro momento.
+
+A primeira trata-se de tentar construir um modelo apenas utilizando os dados estruturados extraídos dos textos. A segunda, tentar construir um modelo apenas com as informações textuais contidas nas denúncias e seus anexos. Por fim, uma combinação de ambas as alternativas.
+
+Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de denúncias de acordo com os rótulos não é balanceada. Além disso, algumas classes possuem muito poucas observações. Por essa razão, decidiu-se trabalhar com apenas duas classes apta (1), não apta (0). A figura \autoref{fig_00300_rotulos_duas_classes}
+
+\begin{figure}[htbp]
+    \caption{Distribuição dos rótulos utilizando 2 classes}
+    \label{fig_00300_rotulos_duas_classes}
+    \begin{center}
+        \includegraphics[width=\columnwidth]{images/fig_00300_rotulos_duas_classes.png}
+    \end{center}
+\legend{Fonte: Autor.}
+\end{figure}
+
+\subsection{Modelo considerando apenas os dados estruturados}
+
+\#TODO: análise exploratória
+
+\#TODO: seleção de variáveis
+
+\#TODO: testes de algoritmos
+
+\#TODO: escolha de um algoritmo mais adequado aos dados
+
+
+\subsection{Modelo considerando apenas os textos}
 
 \section{Resultados dos Experimentos}
 
