@@ -240,13 +240,19 @@ A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada c
     
     \item utilizar a melhor combinação de hiper-parâmetros encontrada para realizar uma validação cruzada com 20 partições e obter as seguintes métricas: \textit{balanced\_accuracy}, \textit{roc\_auc}, \textit{average\_precision} e \textit{f1\_weighted};
     
-    \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema;
+    \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema.
 \end{itemize}
 
-\#TODO: testes de algoritmos
+A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem foi definida pelo score obtido pela métrica \textit{balanced\_accuracy}.
 
-\#TODO: escolha de um algoritmo mais adequado aos dados
-
+\begin{figure}[htbp]
+    \caption{Distribuição dos scores por métrica e modelo}
+    \label{fig_00400_comparacao_score_modelos_dados_estr}
+    \begin{center}
+        \includegraphics[width=\columnwidth]{images/fig_00400_comparacao_score_modelos_dados_estr.png}
+    \end{center}
+\legend{Fonte: Autor.}
+\end{figure}
 
 \subsection{Modelo considerando apenas os textos}
 
