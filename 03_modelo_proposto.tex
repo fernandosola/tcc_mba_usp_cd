@@ -233,7 +233,9 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 
 Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização de todas as features aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 melhores features na etapa de modelagem.
 
-A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de acurácia balanceada obtido em diversos modelos testados. O processo consistiu basicamente em realizar as seguintes etapas para cada algoritmo a ser avaliado:
+A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de acurácia balanceada obtido em diversos modelos testados. Esta métrica foi escolhida por ser uma métrica interessante em tarefas de classificação binária com \textit{datasets} desbalanceados.
+
+O processo consistiu basicamente em realizar as seguintes etapas para cada algoritmo a ser avaliado:
 
 \begin{itemize}
     \item utilizar a classe \textit{GridSearchCV}, do \textit{scikit-learn} com algumas combinações de hiper-parâmetros e validação cruzada com 10 partições para escolher um boa versão de modelo e tornar mais justa a comparação;
@@ -243,7 +245,7 @@ A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada c
     \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema.
 \end{itemize}
 
-A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem foi definida pelo score obtido pela métrica \textit{balanced\_accuracy}.
+A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem, em todos os gráficos, foi definida através score obtido pela métrica \textit{balanced\_accuracy}, em ordem decrescente. \newline
 
 \begin{figure}[htbp]
     \caption{Distribuição dos scores por métrica e modelo}
@@ -254,13 +256,19 @@ A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico 
 \legend{Fonte: Autor.}
 \end{figure}
 
-\subsection{Modelo considerando apenas os textos}
+O algoritmo escolhido foi o \textit{RandomForestClassifier}, por apresentar o melhor qualificação pela métrica escolhida. Além disso, o algoritmo também performou bem nas outras três métricas avaliadas. 
 
-\section{Combinação de Modelos}
+Com o algoritmo escolhido, o passo seguinte foi a otimização dos hiper-parâmetros. Utilizou-se a biblioteca \textit{skopt} para realizar uma busca automática. Por fim, um novo modelo foi treinado com os parâmetros selecionados e todos os dados de teste. A performance do modelo é detalhada na .
 
-\section{Modelo Escolhido}
 
-\section{Desempenho do Modelo em Produção}
 
-# TODO: autoencoder
+% \subsection{Modelo considerando apenas os textos}
+
+% \section{Combinação de Modelos}
+
+% \section{Modelo Escolhido}
+
+% \section{Desempenho do Modelo em Produção}
+
+% # TODO: autoencoder
 
