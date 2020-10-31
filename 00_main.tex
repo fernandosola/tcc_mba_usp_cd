@@ -26,6 +26,32 @@
 % ---------------------------------------------------------------------------
 
 \usepackage{tabularx}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\minuscule\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\tiny,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstset{style=mystyle}
 
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
@@ -83,13 +109,13 @@ Em média, apenas 30\% das denúncias que chegam são consideradas aptas pelos e
 \incluilistadetabelas
 
 % Inclui a lista de quadros
-\incluilistadequadros
+% \incluilistadequadros
 
 % Inclui a lista de algoritmos
 % \incluilistadealgoritmos
 
 % Inclui a lista de códigos
-% \incluilistadecodigos
+\incluilistadecodigos
 
 % Inclui a lista de siglas e abreviaturas
 \incluilistadesiglas

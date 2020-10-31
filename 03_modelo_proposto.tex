@@ -153,7 +153,7 @@ Esta etapa consiste na consolidação, em \textit{features} ou características,
 \end{table}%
 
 
-Além das 7 \textit{features} e da variável alvo (rótulo) detalhadas na \autoref{tab_00100_visao_geral_dataset}, são extraídas outras 77 \textit{features}. O presente trabalho não detalhará as demais por questões de sigilo, considerando que a metodologia proposta será adotada na instituição em que o autor é vinculado.
+Além das 7 \textit{features} e da variável alvo (rótulo) detalhadas na \autoref{tab_00100_visao_geral_dataset}, são extraídas outras 71 \textit{features}. O presente trabalho não detalhará as demais por questões de sigilo, considerando que a metodologia proposta será adotada na instituição em que o autor é vinculado.
 
 \#TODO: detalhar quantidade de dados estruturados por nível encontrados para as denuncias
 
@@ -167,10 +167,10 @@ Nesta seção, serão exploradas algumas possibilidades de uso das informações
 
 A primeira trata-se de tentar construir um modelo apenas utilizando os dados estruturados extraídos dos textos. A segunda, tentar construir um modelo apenas com as informações textuais contidas nas denúncias e seus anexos. Por fim, uma combinação de ambas as alternativas.
 
-Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de denúncias de acordo com os rótulos não é balanceada. Além disso, algumas classes possuem muito poucas observações. Por essa razão, decidiu-se trabalhar com apenas duas classes apta (1), não apta (0). A figura \autoref{fig_00300_rotulos_duas_classes}
+Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de denúncias de acordo com os rótulos não é balanceada. Além disso, algumas classes possuem muito poucas observações. Por essa razão, decidiu-se trabalhar com apenas duas classes apta (1), não apta (0). Rótulos com valor entre 10 e 50 foram considerados como 0 e rótulos com valores entre 60 e 100 foram considerados como 1. A figura \autoref{fig_00300_rotulos_duas_classes} apresenta a distribuição das denúncias considerando apenas duas classes. Apesar de o \textit{dataset} permanecer desbalanceado, a quantidade de denúncias por classe agora é representativa.
 
 \begin{figure}[htbp]
-    \caption{Distribuição dos rótulos utilizando 2 classes}
+    \caption{Distribuição das denúncias por rótulo utilizando 2 classes}
     \label{fig_00300_rotulos_duas_classes}
     \begin{center}
         \includegraphics[width=\columnwidth]{images/fig_00300_rotulos_duas_classes.png}
@@ -180,9 +180,68 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
 
 \subsection{Modelo considerando apenas os dados estruturados}
 
-\#TODO: análise exploratória
+A primeira tarefa realizada nesta etapa foi a avaliação da representatividade das \textit{features} obtidas na tentativa de explicar a variável alvo. O objetivo é diminuir a complexidade do modelo. Por questões de objetividade e tempo, optou-se por um processo automatizado.
 
-\#TODO: seleção de variáveis
+O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k\ \in\ \text{números pares}$, conforme o código abaixo:\newline
+
+
+\begin{lstlisting}[language=Python]
+k_vs_avg_prec_score = []
+k_vs_bal_acc_score = []
+k_vs_roc_auc_score = []
+for k in range(2, X_estruturado_train.shape[1]+1, 2):
+    selector_model=RandomForestClassifier(n_estimators=1000, class_weight='balanced')
+    selector = SelectFromModel(selector_model, max_features=k, threshold=-np.inf)
+    selector.fit(X_estruturado_train, ytrain)
+  
+    Xtrain2 = selector.transform(X_estruturado_train)
+    Xtest2 = selector.transform(X_estruturado_test)
+    mdl = RandomForestClassifier(n_estimators=1000, class_weight='balanced')
+    mdl.fit(Xtrain2, ytrain)
+    p = mdl.predict_proba(Xtest2)[:, 1]
+    k_vs_avg_prec_score.append(average_precision_score(ytest, p))
+    k_vs_bal_acc_score.append(balanced_accuracy_score(ytest, mdl.predict(Xtest2)))
+    k_vs_roc_auc_score.append(roc_auc_score(ytest, p))
+\end{lstlisting}
+
+Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos.
+
+\begin{table}[htbp]
+\caption{Métricas de acordo com o número de features}
+\label{tab_00200_metricas_numero_features}
+\small
+\centering
+\begin{tabular}{rrrrr}
+\toprule
+ Número de Features &  Average Precision &  Balanced Accuracy &  ROC AUC &  Média \\
+\midrule
+                 10 &             0.4880 &             0.6166 &   0.7150 & 0.6066 \\
+                 \textbf{20} &             
+                 \textbf{0.5133} &             
+                 \textbf{0.6460} &   
+                 \textbf{0.7281} & 
+                 \textbf{0.6291} \\
+                 30 &             0.5108 &             0.6432 &   0.7246 & 0.6262 \\
+                 40 &             0.5266 &             0.6531 &   0.7366 & 0.6387 \\
+                 50 &             0.5260 &             0.6471 &   0.7345 & 0.6359 \\
+                 60 &             0.5263 &             0.6403 &   0.7332 & 0.6333 \\
+                 70 &             0.5275 &             0.6487 &   0.7354 & 0.6372 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização de todas as features aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 melhores features na etapa de modelagem.
+
+A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de acurácia balanceada obtido em diversos modelos testados. O processo consistiu basicamente em realizar as seguintes etapas para cada algoritmo a ser avaliado:
+
+\begin{itemize}
+    \item utilizar a classe \textit{GridSearchCV}, do \textit{scikit-learn} com algumas combinações de hiper-parâmetros e validação cruzada com 10 partições para escolher um boa versão de modelo e tornar mais justa a comparação;
+    
+    \item utilizar a melhor combinação de hiper-parâmetros encontrada para realizar uma validação cruzada com 20 partições e obter as seguintes métricas: \textit{balanced\_accuracy}, \textit{roc\_auc}, \textit{average\_precision} e \textit{f1\_weighted};
+    
+    \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema;
+\end{itemize}
 
 \#TODO: testes de algoritmos
 
@@ -191,9 +250,11 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
 
 \subsection{Modelo considerando apenas os textos}
 
-\section{Resultados dos Experimentos}
+\section{Combinação de Modelos}
 
 \section{Modelo Escolhido}
 
 \section{Desempenho do Modelo em Produção}
+
+# TODO: autoencoder
 
