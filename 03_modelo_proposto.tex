@@ -173,7 +173,7 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
     \caption{Distribuição das denúncias por rótulo utilizando 2 classes}
     \label{fig_00300_rotulos_duas_classes}
     \begin{center}
-        \includegraphics[width=\columnwidth]{images/fig_00300_rotulos_duas_classes.png}
+        \includegraphics[width=300pt]{images/fig_00300_rotulos_duas_classes.png}
     \end{center}
 \legend{Fonte: Autor.}
 \end{figure}
@@ -256,13 +256,92 @@ A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico 
 \legend{Fonte: Autor.}
 \end{figure}
 
-O algoritmo escolhido foi o \textit{RandomForestClassifier}, por apresentar o melhor qualificação pela métrica escolhida. Além disso, o algoritmo também performou bem nas outras três métricas avaliadas. 
+O algoritmo escolhido foi o \textit{RandomForestClassifier}, por apresentar o melhor desempenho pela métrica escolhida. Além disso, o algoritmo também performou bem nas outras três métricas avaliadas. 
 
-Com o algoritmo escolhido, o passo seguinte foi a otimização dos hiper-parâmetros. Utilizou-se a biblioteca \textit{skopt} para realizar uma busca automática. Por fim, um novo modelo foi treinado com os parâmetros selecionados e todos os dados de teste. A performance do modelo é detalhada na .
+Com o algoritmo escolhido, o passo seguinte foi a otimização dos hiper-parâmetros. Utilizou-se a biblioteca \textit{skopt} para realizar uma busca automática. Por fim, um novo modelo foi treinado utilizando-se os parâmetros selecionados e todos os dados de treinamento. A \autoref{tab_00300_desempenho_final_modelo_dados_estr} apresenta a matriz de confusão e a \autoref{tab_00400_desempenho_final_modelo_dados_estr} apresenta o relatório de classificação, provenientes da aplicação do modelo nos dados de teste.
 
+\begin{table}[htbp]
+\caption{Matriz de confusão do modelo, avaliando-se pelos dados de teste}
+\label{tab_00300_desempenho_final_modelo_dados_estr}
+\small
+\centering
+\begin{tabular}{lrr}
+\toprule
+      {} &  Predito como 0 &  Predito como 1 \\
+\midrule
+Classe 0 &             176 &              44 \\
+Classe 1 &              23 &              55 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
 
+\begin{table}[htbp]
+\caption{Relatório de classificação, avaliando-se pelos dados de teste}
+\label{tab_00400_desempenho_final_modelo_dados_estr}
+\small
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+          {} & Precisão   &  Revocação & F1-Score &  Suporte \\
+\midrule
+       Classe 0 &      0.88  &    0.80    &     0.84 &      220 \\
+       Classe 1 &      0.56  &    0.71    &     0.62 &       78 \\
+             {} &        {}  &      {}    &       {} &       {} \\
+       Acurácia &        {}  &      {}    &     0.78 &      298 \\
+          Média &      0.72  &    0.75    &     0.73 &      298 \\
+Média Ponderada &      0.80  &    0.78    &     0.78 &      298 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
 
-% \subsection{Modelo considerando apenas os textos}
+O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 176 \sigla{VP}{verdadeiros positivos} e 55 \sigla{VN}{verdadeiros negativos} que somam um total de 231 classificações corretas representando uma acurácia geral de aproximadamente 0.78. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 bem superior à da classe 1, 0.88 e 0.56, respectivamente. Uma análise mais detalhada do desempenho deste modelo será realizada após os testes com o modelo baseado nos textos que será discutido na próxima seção. Entretanto, é possível afirmar que o modelo gerado possui um desempenho razoável para a tarefa de classificação proposta.
+
+\subsection{Modelo considerando apenas os textos}
+
+Nesta seção será avaliada a possibilidade de criação de um modelo utilizando apenas os textos das denúncias e de seu anexos. Como foi visto no \autoref{chapter:revisao_bibliografica}, há diferentes formas de extrair informações de textos. Elas variam bastante de acordo com o propósito pretendido. 
+
+Primeiramente realizou-se um pré-processamento em todos os documentos com o objetivo de padronizar os textos. Todas as letras foram convertidas para minúsculas, caracteres acentuados foram substituídos por seus equivalentes sem acentuação, \textit{stopwords} foram removidas e espaços excessivos foram eliminados.
+
+Para o propósito deste estudo, será avaliado o TF-IDF como técnica para extração de características de documentos. Como explicado anteriormente, esta técnica combina a contagem de palavras presentes no texto com a ocorrência das mesmas em outros documentos. Com isso, palavras que ocorrem em muitos documentos terão seu peso atenuado enquanto que palavras que ocorrem um conjuntos pequenos de documentos receberão um peso maior.
+Como exemplo, a \autoref{tab_00500_exemplo_tfidf} exibe algumas \textit{features} geradas pelo TF-IDF para as primeiras 10 denúncias do \textit{dataset} de treinamento.
+
+\begin{table}[htbp]
+\caption{Exemplo de features geradas pelo TF-IDF}
+\label{tab_00500_exemplo_tfidf}
+\tiny
+\centering
+\begin{tabular}{lrrrrrrrrrrl}
+\toprule
+ ... &  ativo &    ato &   atos &  atraves &  atribuicoes &  atuacao &  atual &  auditoria &  augusto &  ausencia &  ... \\
+\midrule
+ ... & 0.0000 & 0.0988 & 0.0658 &   0.0036 &       0.0115 &   0.0069 & 0.0156 &     0.0000 &   0.0000 &    0.0266 &  ... \\
+ ... & 0.0084 & 0.0449 & 0.0184 &   0.0090 &       0.0107 &   0.0045 & 0.0000 &     0.0000 &   0.0027 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0000 & 0.0000 &   0.1386 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0320 & 0.0145 &   0.0158 &       0.0029 &   0.0087 & 0.0074 &     0.0000 &   0.0007 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0001 & 0.0002 &   0.0001 &       0.0000 &   0.0003 & 0.0000 &     0.0000 &   0.0006 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.1226 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+ ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+Como é possível avaliar na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.  
+
+A mesma metodologia utilizada no modelo criado a partir de dado estruturados foi utilizada para a criação deste modelo. Assim, após a execução dos experimentos com os dados de treinamento tem-se os resultados apresentados na \autoref{}.
+
+\begin{figure}[htbp]
+    \caption{Distribuição dos scores por métrica e modelo}
+    \label{fig_00500_comparacao_score_modelos_texto}
+    \begin{center}
+        \includegraphics[width=\columnwidth]{images/fig_00400_comparacao_score_modelos_dados_estr.png}
+    \end{center}
+\legend{Fonte: Autor.}
+\end{figure}
 
 % \section{Combinação de Modelos}
 
