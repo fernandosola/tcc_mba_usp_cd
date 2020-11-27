@@ -245,7 +245,7 @@ O processo consistiu basicamente em realizar as seguintes etapas para cada algor
     \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema.
 \end{itemize}
 
-A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem, em todos os gráficos, foi definida através score obtido pela métrica \textit{balanced\_accuracy}, em ordem decrescente. \newline
+A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem, em todos os gráficos, foi definida através da média das quatro métricas avaliadas, em ordem decrescente, da esquerda para a direita. \newline
 
 \begin{figure}[htbp]
     \caption{Distribuição dos scores por métrica e modelo}
@@ -332,16 +332,20 @@ Como exemplo, a \autoref{tab_00500_exemplo_tfidf} exibe algumas \textit{features
 \end{table}%
 Como é possível avaliar na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.  
 
-A mesma metodologia utilizada no modelo criado a partir de dado estruturados foi utilizada para a criação deste modelo. Assim, após a execução dos experimentos com os dados de treinamento tem-se os resultados apresentados na \autoref{}.
+A mesma metodologia utilizada na escolha do algoritmo para a geração do modelo baseado em dados estruturados foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela média das quatro métricas avaliadas, em ordem decrescente, da esquerda para a direita. Os modelos gerado pelos algoritmos  \textit{XGBClassifier} e \textit{KNeighborsClassifier} tiveram, respectivamente, \textit{scores} de 0.718 e 0.725 pela métrica \textit{balanced accuracy}. A pequena diferença nos resultados fez com que as outras métricas fossem avaliadas também. É possível identificar na figura que os dois modelos têm um desempenho muito próximo para \textit{balanced accuracy} e \textit{f1 weighted}, entretanto, para as métricas de \textit{roc auc} e \textit{average precision} o \textit{XGBClassifier} teve desempenho superior. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
 
 \begin{figure}[htbp]
-    \caption{Distribuição dos scores por métrica e modelo}
+    \caption{Distribuição dos scores por métrica e modelo }
     \label{fig_00500_comparacao_score_modelos_texto}
     \begin{center}
-        \includegraphics[width=\columnwidth]{images/fig_00400_comparacao_score_modelos_dados_estr.png}
+        \includegraphics[width=\columnwidth]{images/fig_00500_comparacao_score_modelos_texto.png}
     \end{center}
 \legend{Fonte: Autor.}
 \end{figure}
+
+
+
+
 
 % \section{Combinação de Modelos}
 
