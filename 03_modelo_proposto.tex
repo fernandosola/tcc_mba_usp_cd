@@ -298,7 +298,7 @@ Média Ponderada &      0,80  &    0,80    &     0,80 &      298 \\
 \legend{Fonte: Autor.}
 \end{table}%
 
-O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 188 \sigla{VP}{verdadeiros negativo} e 50 \sigla{VN}{verdadeiros positivos} que somam um total de 238 classificações corretas representando uma acurácia geral de aproximadamente 0,80. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 (0,87) bem superior à da classe 1 (0,61). O modelo apresenta uma acurácia de 0,80, porém, a acurácia balanceada foi de 0,74. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0.75 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
+O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 188 \sigla{VN}{verdadeiros negativos} e 50 \sigla{VP}{verdadeiros positivos} que somam um total de 238 classificações corretas representando uma acurácia geral de aproximadamente 0,80. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 (0,87) bem superior à da classe 1 (0,61). O modelo apresenta uma acurácia de 0,80, porém, a acurácia balanceada foi de 0,74. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0.75 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
 
 \begin{figure}[htbp]
     \caption{Curva Característica de Operação do Receptor (ROC)}
@@ -346,9 +346,9 @@ Como exemplo, a \autoref{tab_00500_exemplo_tfidf} exibe algumas \textit{features
 \legend{Fonte: Autor.}
 \end{table}%
 
-Na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.  
+Na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.
 
-A mesma metodologia utilizada na escolha do algoritmo na \autoref{section:modelo_dados_estruturados} foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela métrica \textit{roc\_auc}, em ordem decrescente, da esquerda para a direita. Aqueles gerados pelos algoritmos  \textit{XGBClassifier} e \textit{KNeighborsClassifier} tiveram, respectivamente, \textit{scores} de 0.718 e 0.725 pela métrica \textit{balanced accuracy}. A pequena diferença nos resultados fez com que as outras métricas fossem avaliadas também. É possível identificar na figura que ambos os modelos têm um desempenho muito próximo para \textit{balanced accuracy} e \textit{f1 weighted}, entretanto, para as métricas de \textit{roc auc} e \textit{average precision} o \textit{XGBClassifier} teve desempenho superior. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
+A mesma metodologia utilizada na escolha do algoritmo na \autoref{section:modelo_dados_estruturados} foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela métrica \textit{roc\_auc}, em ordem decrescente, da esquerda para a direita. O algoritmo que teve o melhor desempenho foi o \textit{XGBClassifier} com um \textit{score} de 0,830. Além disso, teve ainda, o melhor desempenho nas outras métricas avaliadas. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
 
 \begin{figure}[htbp]
     \caption{Distribuição dos scores por métrica e modelo }
@@ -371,8 +371,8 @@ O mesmo processo de otimização utilizado para o modelo da \autoref{section:mod
 \toprule
       {} &  Predito como 0 &  Predito como 1 \\
 \midrule
-Classe 0 &             170 &              50 \\
-Classe 1 &              25 &              53 \\
+Classe 0 &             187 &              33 \\
+Classe 1 &              31 &              47 \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
@@ -387,18 +387,28 @@ Classe 1 &              25 &              53 \\
 \toprule
              {} & Precisão   &  Revocação & F1-Score &  Suporte \\
 \midrule
-       Classe 0 &      0.87  &    0.77    &     0.82 &      220 \\
-       Classe 1 &      0.51  &    0.68    &     0.59 &       78 \\
+       Classe 0 &      0,86  &    0,85    &     0,220 &     220 \\
+       Classe 1 &      0,59  &    0,60    &     0,59 &       78 \\
              {} &        {}  &      {}    &       {} &       {} \\
-       Acurácia &        {}  &      {}    &     0.75 &      298 \\
-          Média &      0.69  &    0.73    &     0.70 &      298 \\
-Média Ponderada &      0.78  &    0.75    &     0.76 &      298 \\
+       Acurácia &        {}  &      {}    &     0,79 &      298 \\
+          Média &      0,72  &    0,73    &     0,72 &      298 \\
+Média Ponderada &      0,79  &    0,79    &     0,79 &      298 \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
 \end{table}%
 
 
+É possível observar na matriz de confusão (\autoref{tab_00600_desempenho_final_modelo_texto}) 187 \sigla{VN}{verdadeiros negativos} e 47 \sigla{VP}{verdadeiros positivos} que somam um total de 234 classificações corretas representando uma acurácia geral de aproximadamente 0,79. Ao avaliar os resultados por classe (\autoref{tab_00700_desempenho_final_modelo_texto}), observa-se que o modelo possui uma precisão para a classe 0 (0,86) bem superior à da classe 1 (0,59). O modelo apresenta uma acurácia de 0,79, porém, a acurácia balanceada foi de 0,72. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade de observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0.72 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
+
+\begin{figure}[htbp]
+    \caption{Distribuição dos scores por métrica e modelo }
+    \label{fig_00500_comparacao_score_modelos_texto}
+    \begin{center}
+        \includegraphics[width=\columnwidth]{images/fig_00500_comparacao_score_modelos_texto.png}
+    \end{center}
+\legend{Fonte: Autor.}
+\end{figure}
 
 
 \section{Combinação de Modelos}
