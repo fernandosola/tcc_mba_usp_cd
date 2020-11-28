@@ -216,17 +216,17 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \toprule
  Número de Features &  Average Precision &  Balanced Accuracy &  ROC AUC &  Média \\
 \midrule
-                 10 &             0.4880 &             0.6166 &   0.7150 & 0.6066 \\
+                 10 &             0,4880 &             0,6166 &   0,7150 & 0,6066 \\
                  \textbf{20} &             
-                 \textbf{0.5133} &             
-                 \textbf{0.6460} &   
-                 \textbf{0.7281} & 
-                 \textbf{0.6291} \\
-                 30 &             0.5108 &             0.6432 &   0.7246 & 0.6262 \\
-                 40 &             0.5266 &             0.6531 &   0.7366 & 0.6387 \\
-                 50 &             0.5260 &             0.6471 &   0.7345 & 0.6359 \\
-                 60 &             0.5263 &             0.6403 &   0.7332 & 0.6333 \\
-                 70 &             0.5275 &             0.6487 &   0.7354 & 0.6372 \\
+                 \textbf{0,5133} &             
+                 \textbf{0,6460} &   
+                 \textbf{0,7281} & 
+                 \textbf{0,6291} \\
+                 30 &             0,5108 &             0,6432 &   0,7246 & 0,6262 \\
+                 40 &             0,5266 &             0,6531 &   0,7366 & 0,6387 \\
+                 50 &             0,5260 &             0,6471 &   0,7345 & 0,6359 \\
+                 60 &             0,5263 &             0,6403 &   0,7332 & 0,6333 \\
+                 70 &             0,5275 &             0,6487 &   0,7354 & 0,6372 \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
@@ -246,7 +246,8 @@ O processo consistiu basicamente em realizar as seguintes etapas para cada algor
     \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema.
 \end{itemize}
 
-A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem, em todos os gráficos, foi definida através da média das quatro métricas avaliadas, em ordem decrescente, da esquerda para a direita. \newline
+A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico de \textit{boxplot} para cada algoritmo avaliado. A ordem em que os algoritmos aparecem, em todos os gráficos, foi definida através do score obtido pela métrica \textit{roc\_auc}, em ordem decrescente, da esquerda para a direita. \newline
+
 
 \begin{figure}[htbp]
     \caption{Distribuição dos scores por métrica e modelo}
@@ -259,7 +260,7 @@ A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico 
 
 O algoritmo escolhido foi o \textit{RandomForestClassifier}, por apresentar o melhor desempenho pela métrica escolhida. Além disso, o algoritmo também performou bem nas outras três métricas avaliadas. 
 
-Com o algoritmo escolhido, o passo seguinte foi a otimização dos hiper-parâmetros. Utilizou-se a biblioteca \textit{skopt} para realizar uma busca automática. Por fim, um novo modelo foi treinado utilizando-se os parâmetros selecionados e todos os dados de treinamento. A \autoref{tab_00300_desempenho_final_modelo_dados_estr} apresenta a matriz de confusão e a \autoref{tab_00400_desempenho_final_modelo_dados_estr} apresenta o relatório de classificação, provenientes da aplicação do modelo nos dados de teste.
+O passo seguinte foi a otimização dos hiper-parâmetros. Utilizou-se a biblioteca \textit{skopt} para realizar uma busca automática. Por fim, um novo modelo foi treinado utilizando-se os parâmetros selecionados e todos os dados de treinamento. A \autoref{tab_00300_desempenho_final_modelo_dados_estr} apresenta a matriz de confusão e a \autoref{tab_00400_desempenho_final_modelo_dados_estr} apresenta o relatório de classificação, provenientes das previsões do modelo para os dados de teste.
 
 \begin{table}[htbp]
 \caption{Matriz de confusão do modelo, avaliando-se pelos dados de teste}
@@ -270,8 +271,8 @@ Com o algoritmo escolhido, o passo seguinte foi a otimização dos hiper-parâme
 \toprule
       {} &  Predito como 0 &  Predito como 1 \\
 \midrule
-Classe 0 &             176 &              44 \\
-Classe 1 &              23 &              55 \\
+Classe 0 &             188 &              32 \\
+Classe 1 &              28 &              50 \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
@@ -286,18 +287,28 @@ Classe 1 &              23 &              55 \\
 \toprule
           {} & Precisão   &  Revocação & F1-Score &  Suporte \\
 \midrule
-       Classe 0 &      0.88  &    0.80    &     0.84 &      220 \\
-       Classe 1 &      0.56  &    0.71    &     0.62 &       78 \\
+       Classe 0 &      0,87  &    0,85    &     0,86 &      220 \\
+       Classe 1 &      0,61  &    0,64    &     0,62 &       78 \\
              {} &        {}  &      {}    &       {} &       {} \\
-       Acurácia &        {}  &      {}    &     0.78 &      298 \\
-          Média &      0.72  &    0.75    &     0.73 &      298 \\
-Média Ponderada &      0.80  &    0.78    &     0.78 &      298 \\
+       Acurácia &        {}  &      {}    &     0,80 &      298 \\
+          Média &      0,74  &    0,75    &     0,74 &      298 \\
+Média Ponderada &      0,80  &    0,80    &     0,80 &      298 \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
 \end{table}%
 
-O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 176 \sigla{VP}{verdadeiros positivos} e 55 \sigla{VN}{verdadeiros negativos} que somam um total de 231 classificações corretas representando uma acurácia geral de aproximadamente 0.78. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 bem superior à da classe 1, 0.88 e 0.56, respectivamente. Uma análise mais detalhada do desempenho deste modelo será realizada após os testes com o modelo baseado nos textos que será discutido na próxima seção. Entretanto, é possível afirmar que o modelo gerado possui um desempenho razoável para a tarefa de classificação proposta.
+O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 188 \sigla{VP}{verdadeiros negativo} e 50 \sigla{VN}{verdadeiros positivos} que somam um total de 238 classificações corretas representando uma acurácia geral de aproximadamente 0,80. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 (0,87) bem superior à da classe 1 (0,61). O modelo apresenta uma acurácia de 0,80, porém, a acurácia balanceada foi de 0,74. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0.75 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
+
+\begin{figure}[htbp]
+    \caption{Curva Característica de Operação do Receptor (ROC)}
+    \label{fig_00410_roc_auc_dados_estr}
+    \begin{center}
+        \includegraphics[width=\columnwidth]{images/fig_00410_roc_auc_dados_estr.png}
+    \end{center}
+\legend{Fonte: Autor.}
+\end{figure}
+
 
 \subsection{Modelo considerando apenas os textos}
 
