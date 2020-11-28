@@ -309,6 +309,10 @@ O conjunto de testes utilizado possui 298 registros. Assim, como é possível ob
 \legend{Fonte: Autor.}
 \end{figure}
 
+Pela análise da curva ROC, entende-se que seria possível elevar o \textit{recall} do modelo diminuindo-se o limiar utilizado para computar as classes positivas e negativas. Com o limiar em 0,5 (padrão), tem-se uma taxa de falsos positivos de 0,14 e um \textit{recall} de 0,64. Entretanto, ao mover-se o limiar para 0.37, tem-se uma taxa de falsos positivos de 0,28 e um \textit{recall} de 0,76. Talvez seja um \textit{tradeoff} interessante pois o falso positivo de uma denúncia é menos problemático do que um falso negativo.
+
+Em geral, avalia-se que a capacidade distinção entre as classes aprendida pelo modelo é razoável.
+
 \subsection{Modelo considerando apenas os textos}
 
 Nesta seção será avaliada a possibilidade de criação de um modelo utilizando apenas os textos das denúncias e de seu anexos. Como foi visto no \autoref{chapter:revisao_bibliografica}, há diferentes formas de extrair informações de textos. Elas variam bastante de acordo com o propósito pretendido. 
@@ -327,23 +331,24 @@ Como exemplo, a \autoref{tab_00500_exemplo_tfidf} exibe algumas \textit{features
 \toprule
  ... &  ativo &    ato &   atos &  atraves &  atribuicoes &  atuacao &  atual &  auditoria &  augusto &  ausencia &  ... \\
 \midrule
- ... & 0.0000 & 0.0988 & 0.0658 &   0.0036 &       0.0115 &   0.0069 & 0.0156 &     0.0000 &   0.0000 &    0.0266 &  ... \\
- ... & 0.0084 & 0.0449 & 0.0184 &   0.0090 &       0.0107 &   0.0045 & 0.0000 &     0.0000 &   0.0027 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0000 & 0.0000 &   0.1386 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0320 & 0.0145 &   0.0158 &       0.0029 &   0.0087 & 0.0074 &     0.0000 &   0.0007 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0001 & 0.0002 &   0.0001 &       0.0000 &   0.0003 & 0.0000 &     0.0000 &   0.0006 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.1226 &     0.0000 &   0.0000 &    0.0000 &  ... \\
- ... & 0.0000 & 0.0000 & 0.0000 &   0.0000 &       0.0000 &   0.0000 & 0.0000 &     0.0000 &   0.0000 &    0.0000 &  ... \\
+... & 0,0000 & 0,0988 & 0,0658 &   0,0036 &       0,0115 &   0,0069 & 0,0156 &     0,0000 &   0,0000 &    0,0266 &  ... \\
+ ... & 0,0084 & 0,0449 & 0,0184 &   0,0090 &       0,0107 &   0,0045 & 0,0000 &     0,0000 &   0,0027 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0000 & 0,0000 &   0,0000 &       0,0000 &   0,0000 & 0,0000 &     0,0000 &   0,0000 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0000 & 0,0000 &   0,1386 &       0,0000 &   0,0000 & 0,0000 &     0,0000 &   0,0000 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0320 & 0,0145 &   0,0158 &       0,0029 &   0,0087 & 0,0074 &     0,0000 &   0,0007 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0000 & 0,0000 &   0,0000 &       0,0000 &   0,0000 & 0,0000 &     0,0000 &   0,0000 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0000 & 0,0000 &   0,0000 &       0,0000 &   0,0000 & 0,0000 &     0,0000 &   0,0000 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0001 & 0,0002 &   0,0001 &       0,0000 &   0,0003 & 0,0000 &     0,0000 &   0,0006 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0000 & 0,0000 &   0,0000 &       0,0000 &   0,0000 & 0,1226 &     0,0000 &   0,0000 &    0,0000 &  ... \\
+ ... & 0,0000 & 0,0000 & 0,0000 &   0,0000 &       0,0000 &   0,0000 & 0,0000 &     0,0000 &   0,0000 &    0,0000 &  ... \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
 \end{table}%
-Como é possível avaliar na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.  
 
-A mesma metodologia utilizada na escolha do algoritmo na \autoref{section:modelo_dados_estruturados} foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela média das quatro métricas avaliadas, em ordem decrescente, da esquerda para a direita. Aqueles gerados pelos algoritmos  \textit{XGBClassifier} e \textit{KNeighborsClassifier} tiveram, respectivamente, \textit{scores} de 0.718 e 0.725 pela métrica \textit{balanced accuracy}. A pequena diferença nos resultados fez com que as outras métricas fossem avaliadas também. É possível identificar na figura que ambos os modelos têm um desempenho muito próximo para \textit{balanced accuracy} e \textit{f1 weighted}, entretanto, para as métricas de \textit{roc auc} e \textit{average precision} o \textit{XGBClassifier} teve desempenho superior. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
+Na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.  
+
+A mesma metodologia utilizada na escolha do algoritmo na \autoref{section:modelo_dados_estruturados} foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela métrica \textit{roc\_auc}, em ordem decrescente, da esquerda para a direita. Aqueles gerados pelos algoritmos  \textit{XGBClassifier} e \textit{KNeighborsClassifier} tiveram, respectivamente, \textit{scores} de 0.718 e 0.725 pela métrica \textit{balanced accuracy}. A pequena diferença nos resultados fez com que as outras métricas fossem avaliadas também. É possível identificar na figura que ambos os modelos têm um desempenho muito próximo para \textit{balanced accuracy} e \textit{f1 weighted}, entretanto, para as métricas de \textit{roc auc} e \textit{average precision} o \textit{XGBClassifier} teve desempenho superior. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
 
 \begin{figure}[htbp]
     \caption{Distribuição dos scores por métrica e modelo }
@@ -354,7 +359,7 @@ A mesma metodologia utilizada na escolha do algoritmo na \autoref{section:modelo
 \legend{Fonte: Autor.}
 \end{figure}
 
-O mesmo processo de otimização utilizado para o modelo da \autoref{section:modelo_dados_estruturados} foi adotado para este modelo. Assim, após a execução da biblioteca \textit{skopt} para encontrar bons hiperparâmetros para o modelo, foi gerado um modelo treinado com todos os dados de treinamento. Os resultados são exibidos nas tabelas \ref{tab_00600_desempenho_final_modelo_texto} e \ref{tab_00700_desempenho_final_modelo_texto}.
+O mesmo processo de otimização utilizado para o modelo da \autoref{section:modelo_dados_estruturados} foi adotado para este modelo. Assim, após a execução da biblioteca \textit{skopt} para encontrar bons hiper-parâmetros para o modelo, foi gerado um modelo treinado com todos os dados de treinamento. Os resultados são exibidos nas tabelas \ref{tab_00600_desempenho_final_modelo_texto} e \ref{tab_00700_desempenho_final_modelo_texto}.
 
 
 \begin{table}[htbp]
@@ -396,7 +401,7 @@ Média Ponderada &      0.78  &    0.75    &     0.76 &      298 \\
 
 
 
-% \section{Combinação de Modelos}
+\section{Combinação de Modelos}
 pq combinar?
 
 dados presentes na denuncia
