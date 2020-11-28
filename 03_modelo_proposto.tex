@@ -179,6 +179,7 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
 \end{figure}
 
 \subsection{Modelo considerando apenas os dados estruturados}
+\label{section:modelo_dados_estruturados}
 
 A primeira tarefa realizada nesta etapa foi a avaliação da representatividade das \textit{features} obtidas na tentativa de explicar a variável alvo. O objetivo é diminuir a complexidade do modelo. Por questões de objetividade e tempo, optou-se por um processo automatizado.
 
@@ -233,14 +234,14 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 
 Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização de todas as features aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 melhores features na etapa de modelagem.
 
-A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de acurácia balanceada obtido em diversos modelos testados. Esta métrica foi escolhida por ser uma métrica interessante em tarefas de classificação binária com \textit{datasets} desbalanceados.
+A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de área sob a curva ROC (\textit{roc\_auc}) obtido em diversos modelos testados. Esta métrica foi escolhida por ser uma métrica interessante para avaliação do desempenho do modelo com foco na classe positiva, neste caso a classe 1.
 
 O processo consistiu basicamente em realizar as seguintes etapas para cada algoritmo a ser avaliado:
 
 \begin{itemize}
-    \item utilizar a classe \textit{GridSearchCV}, do \textit{scikit-learn} com algumas combinações de hiper-parâmetros e validação cruzada com 10 partições para escolher um boa versão de modelo e tornar mais justa a comparação;
+    \item utilizar a classe \textit{GridSearchCV}, do \textit{scikit-learn} com algumas combinações de hiper-parâmetros e validação cruzada com 10 partições estratificadas para escolher um boa versão de modelo e tornar mais justa a comparação;
     
-    \item utilizar a melhor combinação de hiper-parâmetros encontrada para realizar uma validação cruzada com 20 partições e obter as seguintes métricas: \textit{balanced\_accuracy}, \textit{roc\_auc}, \textit{average\_precision} e \textit{f1\_weighted};
+    \item utilizar a melhor combinação de hiper-parâmetros encontrada para realizar uma validação cruzada com 10 partições e obter as seguintes métricas: \textit{roc\_auc}, \textit{balanced\_accuracy}, \textit{average\_precision} e \textit{f1\_weighted};
     
     \item utilizar a distribuição de scores obtidos para cada métrica e modelo para realizar a escolha do algoritmo mais adequado ao problema.
 \end{itemize}
@@ -332,7 +333,7 @@ Como exemplo, a \autoref{tab_00500_exemplo_tfidf} exibe algumas \textit{features
 \end{table}%
 Como é possível avaliar na \autoref{tab_00500_exemplo_tfidf}, cada linha representa uma denúncia e cada coluna representa uma palavra. Palavras que não são encontradas na denúncia recebem um peso 0 e palavras que estão presentes na denúncia recebem um peso que é ponderado pela quantidade de vezes que ela está presente no texto e, também, pela sua presença ou não nas demais denúncias analisadas. Esta matriz de palavras por documento será utilizada para o treinamento e comparação dos modelos. Para a comparação dos algoritmos, o TF-IDF foi parametrizado de forma a permitir no máximo 5.000 palavras e só serão aceitas palavras que ocorram, em pelo menos 5 documentos ou no máximo em 50\% dos documentos. Assim, elimina-se palavras que não discriminam muito bem grupos de documentos por serem específicas demais ou genéricas demais.  
 
-A mesma metodologia utilizada na escolha do algoritmo para a geração do modelo baseado em dados estruturados foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela média das quatro métricas avaliadas, em ordem decrescente, da esquerda para a direita. Os modelos gerado pelos algoritmos  \textit{XGBClassifier} e \textit{KNeighborsClassifier} tiveram, respectivamente, \textit{scores} de 0.718 e 0.725 pela métrica \textit{balanced accuracy}. A pequena diferença nos resultados fez com que as outras métricas fossem avaliadas também. É possível identificar na figura que os dois modelos têm um desempenho muito próximo para \textit{balanced accuracy} e \textit{f1 weighted}, entretanto, para as métricas de \textit{roc auc} e \textit{average precision} o \textit{XGBClassifier} teve desempenho superior. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
+A mesma metodologia utilizada na escolha do algoritmo na \autoref{section:modelo_dados_estruturados} foi utilizada para a escolha do algoritmo para este modelo.  A \autoref{fig_00500_comparacao_score_modelos_texto} apresenta um gráfico de \textit{boxplot} com o desempenho de cada modelo. Os modelos foram ordenados na figura pela média das quatro métricas avaliadas, em ordem decrescente, da esquerda para a direita. Aqueles gerados pelos algoritmos  \textit{XGBClassifier} e \textit{KNeighborsClassifier} tiveram, respectivamente, \textit{scores} de 0.718 e 0.725 pela métrica \textit{balanced accuracy}. A pequena diferença nos resultados fez com que as outras métricas fossem avaliadas também. É possível identificar na figura que ambos os modelos têm um desempenho muito próximo para \textit{balanced accuracy} e \textit{f1 weighted}, entretanto, para as métricas de \textit{roc auc} e \textit{average precision} o \textit{XGBClassifier} teve desempenho superior. Por essa razão, escolheu-se o \textit{XGBClassifier} para a otimização de hiper-parâmetros e avaliação final.
 
 \begin{figure}[htbp]
     \caption{Distribuição dos scores por métrica e modelo }
@@ -343,11 +344,59 @@ A mesma metodologia utilizada na escolha do algoritmo para a geração do modelo
 \legend{Fonte: Autor.}
 \end{figure}
 
+O mesmo processo de otimização utilizado para o modelo da \autoref{section:modelo_dados_estruturados} foi adotado para este modelo. Assim, após a execução da biblioteca \textit{skopt} para encontrar bons hiperparâmetros para o modelo, foi gerado um modelo treinado com todos os dados de treinamento. Os resultados são exibidos nas tabelas \ref{tab_00600_desempenho_final_modelo_texto} e \ref{tab_00700_desempenho_final_modelo_texto}.
+
+
+\begin{table}[htbp]
+\caption{Matriz de confusão do modelo, avaliando-se pelos dados de teste}
+\label{tab_00600_desempenho_final_modelo_texto}
+\small
+\centering
+\begin{tabular}{lrr}
+\toprule
+      {} &  Predito como 0 &  Predito como 1 \\
+\midrule
+Classe 0 &             170 &              50 \\
+Classe 1 &              25 &              53 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+\begin{table}[htbp]
+\caption{Relatório de classificação, avaliando-se pelos dados de teste}
+\label{tab_00700_desempenho_final_modelo_texto}
+\small
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+             {} & Precisão   &  Revocação & F1-Score &  Suporte \\
+\midrule
+       Classe 0 &      0.87  &    0.77    &     0.82 &      220 \\
+       Classe 1 &      0.51  &    0.68    &     0.59 &       78 \\
+             {} &        {}  &      {}    &       {} &       {} \\
+       Acurácia &        {}  &      {}    &     0.75 &      298 \\
+          Média &      0.69  &    0.73    &     0.70 &      298 \\
+Média Ponderada &      0.78  &    0.75    &     0.76 &      298 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
 
 
 
 
 % \section{Combinação de Modelos}
+pq combinar?
+
+dados presentes na denuncia
+
+dados derivados do que se ve na denuncia ajudam
+
+modelos se complementam?
+
+
+
 
 % \section{Modelo Escolhido}
 
