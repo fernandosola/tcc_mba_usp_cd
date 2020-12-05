@@ -1,4 +1,9 @@
+\section{Considerações Iniciais}
+
+Neste capítulo, serão descritos os experimentos realizados, métricas utilizadas e o modelo escolhido. Por fim, serão exibidos alguns resultados obtidos a partir da utilização do modelo selecionado aplicado em dados reais.
+
 \section{Experimentos Propostos}
+\label{section:experimentos_propostos}
 
 Nesta seção, serão exploradas algumas possibilidades de uso das informações extraídas para construir classificadores. Desta forma, identifica-se algumas alternativas óbvias que devem ser avaliadas em um primeiro momento.
 
@@ -49,7 +54,7 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \legend{Fonte: Autor.}
 \end{table}%
 
-Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização de todas do conjunto completo aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 mais relevantes na etapa de modelagem.
+Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização do conjunto completo aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 mais relevantes na etapa de modelagem.
 
 A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de área sob a curva ROC (\textit{roc\_auc}) obtido em diversos modelos testados. Esta métrica foi escolhida por ser uma métrica interessante para avaliação do desempenho do modelo com foco na classe positiva, neste caso a classe 1.
 
@@ -115,7 +120,7 @@ Média Ponderada &      0,80  &    0,80    &     0,80 &      298 \\
 \legend{Fonte: Autor.}
 \end{table}%
 
-O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 188 verdadeiros negativos e 50 verdadeiros positivos que somam um total de 238 classificações corretas representando uma acurácia geral de aproximadamente 0,80. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 (0,87) bem superior à da classe 1 (0,61). O modelo apresenta uma acurácia de 0,80, porém, a acurácia balanceada foi de 0,74. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0.75 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
+O conjunto de testes utilizado possui 298 registros. Assim, como é possível observar na \autoref{tab_00300_desempenho_final_modelo_dados_estr}, tem-se 188 verdadeiros negativos e 50 verdadeiros positivos que somam um total de 238 classificações corretas. Ao avaliar os resultados por classe (\autoref{tab_00400_desempenho_final_modelo_dados_estr}), observa-se que o modelo possui uma precisão para a classe 0 (0,87) bem superior à da classe 1 (0,61). O modelo apresenta uma acurácia de 0,80, porém, a acurácia balanceada foi de 0,75. O score \textit{roc\_auc} foi de 0.82 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
 
 \begin{figure}[htbp]
     \caption{Curva Característica de Operação do Receptor (ROC)}
@@ -128,7 +133,7 @@ O conjunto de testes utilizado possui 298 registros. Assim, como é possível ob
 
 Pela análise da curva ROC, entende-se que seria possível elevar o \textit{recall} do modelo diminuindo-se o limiar utilizado para computar as classes positivas e negativas. Com o limiar em 0,5 (padrão), tem-se uma taxa de falsos positivos de 0,14 e um \textit{recall} de 0,64. Entretanto, ao mover-se o limiar para 0.37, tem-se uma taxa de falsos positivos de 0,28 e um \textit{recall} de 0,76. Talvez seja um \textit{tradeoff} interessante pois o falso positivo de uma denúncia é menos problemático do que um falso negativo.
 
-Em geral, avalia-se que a capacidade distinção entre as classes aprendida pelo modelo é razoável.
+Em geral, avalia-se que a capacidade distinção entre as classes aprendida pelo modelo é bastante razoável.
 
 \subsection{Modelo considerando apenas os textos}
 \label{section:modelo_texto}
@@ -217,7 +222,7 @@ Média Ponderada &      0,79  &    0,79    &     0,79 &      298 \\
 \end{table}%
 
 
-É possível observar na matriz de confusão (\autoref{tab_00600_desempenho_final_modelo_texto}) 187 verdadeiros negativos e 47 verdadeiros positivos que somam um total de 234 classificações corretas representando uma acurácia geral de aproximadamente 0,79. Ao avaliar os resultados por classe (\autoref{tab_00700_desempenho_final_modelo_texto}), observa-se que o modelo possui uma precisão para a classe 0 (0,86) bem superior à da classe 1 (0,59). O modelo apresenta uma acurácia de 0,79, porém, a acurácia balanceada foi de 0,72. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade de observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0,72 e a curva ROC é apresentada na \autoref{fig_00600_roc_auc_texto}.
+É possível observar na matriz de confusão (\autoref{tab_00600_desempenho_final_modelo_texto}) 187 verdadeiros negativos e 47 verdadeiros positivos que somam um total de 234 classificações corretas. Ao avaliar os resultados por classe (\autoref{tab_00700_desempenho_final_modelo_texto}), observa-se que o modelo possui uma precisão para a classe 0 (0,86) bem superior à da classe 1 (0,59). O modelo apresenta uma acurácia de 0,79, porém, a acurácia balanceada foi de 0,73. O score \textit{roc\_auc} foi de 0,83 e a curva ROC é apresentada na \autoref{fig_00600_roc_auc_texto}.
 
 \begin{figure}[htbp]
     \caption{Curva Característica de Operação do Receptor (ROC)}
@@ -231,6 +236,7 @@ Média Ponderada &      0,79  &    0,79    &     0,79 &      298 \\
 De forma geral, pode-se afirmar que este modelo teve um desempenho bem parecido com o modelo proposto na \autoref{section:modelo_dados_estruturados}. Talvez levemente inferior. Mas, ainda assim, com um poder de discriminação entre as classes razoável, conforme observa-se na \autoref{fig_00600_roc_auc_texto}.
 
 \section{Combinação dos Modelos}
+\label{section:combinacao_modelos}
 
 Nesta seção, avalia-se a possibilidade de combinar os modelos obtidos nas seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}. O objetivo aqui é identificar se algum tipo de combinação pode melhorar o desempenho da classificação em relação aos desempenhos isolados de cada modelo. 
 
@@ -366,5 +372,36 @@ Observa-se um equilíbrio maior entre precisão e revocação para ambas as clas
 
 \section{Discussão}
 
-Teste
-Teste
+A escolha de qual modelo seria mais interessante para o problema tem como baliza um ponto muito importante: enviar uma denúncia fraca ou sem elementos para a apuração é um problema muito menor do que não apurar uma denúncia com elementos suficientes e verdadeira.
+
+A \autoref{tab_001400_desempenho_final_tabela_comparativa} apresenta as principais métricas obtidas para cada experimento apresentado nas seções  \ref{section:experimentos_propostos} e \ref{section:combinacao_modelos}.
+
+\begin{table}[htbp]
+\caption{Tabela comparativa dos resultados obtidos para cada modelo}
+\label{tab_001400_desempenho_final_tabela_comparativa}
+\tiny
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+            Modelo &  
+            Precisão média  &  
+            Acurácia Balanceada & 
+            F1-Score (Classe Positiva) &  
+            ROC AUC \\
+\midrule
+              Dados Estruturados           &   0,48  &  0,75 & 0,62 & 0,82 \\
+                           Texto           &   0,46  &  0,74 & 0,59 & 0,84 \\
+  Combinação pela menor probabilidade      &   0,49  &  0,71 & 0,59 & 0,84 \\
+  Combinação pela maior probabilidade      &   0,47  &  0,76 & 0,61 & 0,85 \\ 
+  Combinação pela média das probabilidades &   0,46  &  0,72 & 0,59 & 0,86 \\ 
+
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+Após uma análise criteriosa das métricas de cada modelo e das combinações propostas, optou-se por utilizar a combinação de resultados pela maior probabilidade. Ou seja, o decisor otimista. Ele apresenta a maior acurácia balanceada e a segunda maior área abaixo da curva ROC. Além disso, o F1-Score para a classe positiva também teve um bom desempenho em comparação às outras opções. A precisão média não é a melhor, mas a explicação para isto é que escolhe-se aumentar a revocação para a classe 1 em detrimento da sua precisão. Assim, aumenta-se a quantidade de verdadeiros positivos e, por consequência, falsos positivos. Entretanto, diminui-se consideravelmente a quantidade de falsos negativos conforme a premissa adotada para o problema. Mantém-se uma revocação boa e balanceada para ambas as classes.
+
+Entende-se que a metodologia proposta atinge o objetivo de melhorar a classificação de denúncias aptas. O modelo baseado apenas nos dados estruturados evidencia esta afirmação. Ou seja, a derivação de informações a partir de elementos chave encontrados nas denúncias efetivamente colabora com o processo de classificação. Ainda assim, ao avaliar-se as previsões obtidas pelos dois modelos, constata-se que, em muitos casos, ambos se complementam. A consequência disso foi um melhor desempenho obtido na combinação otimista destes modelos em relação aos seus desempenhos isolados.
+
+Entende-se que a metodologia proposta pode ser abstraída e utilizada em outras áreas como, por exemplo, análise de denúncias policiais ou reclamações em ouvidorias de empresas. Obviamente a extração de entidades e a sua qualificação necessitariam de adaptação para o novo propósito. Algumas perguntas essenciais neste caso seriam: quais entidades há interesse em se identificar? Quais informações derivadas destas entidades são interessantes de se obter? Quais bases de dados são necessárias para esta tarefa?
