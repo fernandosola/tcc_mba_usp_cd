@@ -10,7 +10,7 @@ Ao chegar uma nova denúncia através do sistema FalaBR, da OGU, uma equipe de p
 
 Em geral, estes elementos estão centrados em informações como CPF, CNPJ, Contratos e Convênios entre órgãos públicos e empresas privadas, materialidade (valores monetários descritos na denúncia ou identificados nos contratos e convênios). Com tais informações, a equipe de triagem de denúncias decide se deverá haver apuração (denúncia apta) ou não (denúncia não apta).
 
-Uma grande parte deste trabalho pode ser automatizado. Assim, as consultas realizadas pela equipe, em diversos sistemas, podem ser substituídas por um processo automatizado, desde que seja possível identificar tais entidades no conteúdo das denúncias. Além disso, durante o processo de triagem, a equipe atribui uma nota de 0 a 100 (de 10 em 10) para definir o quão apta é uma denúncia. Por definições internas, notas acima de entre 0 e 50 são consideradas não aptas e notas entre 60 e 100 são consideradas aptas. Tais notas podem ser utilizadas como rótulo para um aprendizado supervisionado.
+Uma grande parte deste trabalho pode ser automatizado. Assim, as consultas realizadas pela equipe, em diversos sistemas, podem ser substituídas por um processo automatizado, desde que seja possível identificar tais entidades no conteúdo das denúncias. Além disso, durante o processo de triagem, a equipe atribui uma nota de 0 a 100 (de 10 em 10) para definir o quão apta é uma denúncia. Por definições internas, notas entre 0 e 50 são consideradas não aptas e notas entre 60 e 100 são consideradas aptas. Tais notas podem ser utilizadas como rótulo para um aprendizado supervisionado.
 
 Assim, sendo possível montar um conjunto de variáveis adequadas é possível propor a criação de um modelo para inferir notas às novas denúncias automaticamente.
 
@@ -36,9 +36,7 @@ Conforme pode ser visto na \autoref{fig_00100_quantidade_denuncias}, a maior par
 
 \subsection{Extração de Textos dos Anexos}
 
-Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grade de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo. Por outro lado, escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
-
-\textbf{TODO: melhorar o texto sobre os anexos, explicar sobre conteúdos dos anexos e decisão sobre necessidade de OCR}
+Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grande de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo. Por outro lado, escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
 
 Existe, no conjunto de dados avaliado por este trabalho, um total de 1801 anexos. A \autoref{fig_00050_quantidade_anexos_tipo_arquivo}, apresenta a quantidade de anexos de acordo com o tipo de arquivo.
 
@@ -51,10 +49,6 @@ Existe, no conjunto de dados avaliado por este trabalho, um total de 1801 anexos
 \legend{Fonte: Autor.}
 \end{figure}
 
-\textbf{TODO: parágrafo sobre quantidade de anexos por denúncia - e histograma com faixas 0 a 5 anexos, 6 a 10 ...}
-
-\textbf{TODO: parágrafo sobre descritiva de anexos por denúncia ...}
-
 Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda, é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos dos tipo pdf, xls, doc, entre outros ou quando o arquivo é uma imagem.
 
 Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um serviço e utilizou-se uma biblioteca em python para realizar as chamadas ao serviço passando os arquivos que deveriam ter o conteúdo extraído.
@@ -64,10 +58,6 @@ Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um
 A extração de dados estruturados é a tentativa de identificar certas entidades de interesse no conteúdo do texto da denúncia e seus anexos. As entidades de interesse, neste momento são CPF, CNPJ, convênios, contratos, NIS, nomes de pessoas, palavras fortes e valores.
 
 Apesar de haver diversas formas de reconhecimento de entidades nomeadas, por questões de escopo e tempo, decidiu-se realizar a extração destas informações utilizando expressões regulares. A implementação de regras com expressões regulares para as entidades citadas acima, é simples na maioria dos casos e não exigem um treinamento como no caso dos algoritmos mencionados no \autoref{chapter:revisao_bibliografica}.
-
-\textbf{TODO: detalhar cada tipo de entidade e incluir o código fonte (no anexo? ou no apêndice?) para detecção e validação das entidades}
-
-\textbf{TODO: escrever sobre a quantidade de entidades encontradas nos registros do dataset}
 
 \subsection{Expansão das Informações}
 
@@ -155,10 +145,6 @@ Esta etapa consiste na consolidação, em \textit{features} ou características,
 
 Além das 7 \textit{features} e da variável alvo (rótulo) detalhadas na \autoref{tab_00100_visao_geral_dataset}, são extraídas outras 71 \textit{features}. O presente trabalho não detalhará as demais por questões de sigilo, considerando que a metodologia proposta será adotada na instituição em que o autor é vinculado.
 
-\#TODO: detalhar quantidade de dados estruturados por nível encontrados para as denuncias
-
-\#TODO: fazer uma tabela/quadro com informações descritivas min, mediana, media, max de dados estruturados por denúncia
-
 Com o dataset finalizado pode-se iniciar a avaliação dos dados para a proposição de um modelo de classificação.
 
 \section{Experimentos Propostos}
@@ -183,27 +169,7 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
 
 A primeira tarefa realizada nesta etapa foi a avaliação da representatividade das \textit{features} obtidas na tentativa de explicar a variável alvo. O objetivo é diminuir a complexidade do modelo. Por questões de objetividade e tempo, optou-se por um processo automatizado.
 
-O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k\ \in\ \text{números pares}$, conforme o código abaixo:\newline
-
-
-\begin{lstlisting}[language=Python]
-k_vs_avg_prec_score = []
-k_vs_bal_acc_score = []
-k_vs_roc_auc_score = []
-for k in range(2, X_estruturado_train.shape[1]+1, 2):
-    selector_model=RandomForestClassifier(n_estimators=1000, class_weight='balanced')
-    selector = SelectFromModel(selector_model, max_features=k, threshold=-np.inf)
-    selector.fit(X_estruturado_train, ytrain)
-  
-    Xtrain2 = selector.transform(X_estruturado_train)
-    Xtest2 = selector.transform(X_estruturado_test)
-    mdl = RandomForestClassifier(n_estimators=1000, class_weight='balanced')
-    mdl.fit(Xtrain2, ytrain)
-    p = mdl.predict_proba(Xtest2)[:, 1]
-    k_vs_avg_prec_score.append(average_precision_score(ytest, p))
-    k_vs_bal_acc_score.append(balanced_accuracy_score(ytest, mdl.predict(Xtest2)))
-    k_vs_roc_auc_score.append(roc_auc_score(ytest, p))
-\end{lstlisting}
+O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k\ \in\ \text{números pares}$.
 
 Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos.
 
@@ -232,7 +198,7 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \legend{Fonte: Autor.}
 \end{table}%
 
-Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização de todas as features aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 melhores features na etapa de modelagem.
+Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização de todas do conjunto completo aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 mais relevantes na etapa de modelagem.
 
 A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de área sob a curva ROC (\textit{roc\_auc}) obtido em diversos modelos testados. Esta métrica foi escolhida por ser uma métrica interessante para avaliação do desempenho do modelo com foco na classe positiva, neste caso a classe 1.
 
@@ -314,6 +280,7 @@ Pela análise da curva ROC, entende-se que seria possível elevar o \textit{reca
 Em geral, avalia-se que a capacidade distinção entre as classes aprendida pelo modelo é razoável.
 
 \subsection{Modelo considerando apenas os textos}
+\label{section:modelo_texto}
 
 Nesta seção será avaliada a possibilidade de criação de um modelo utilizando apenas os textos das denúncias e de seu anexos. Como foi visto no \autoref{chapter:revisao_bibliografica}, há diferentes formas de extrair informações de textos. Elas variam bastante de acordo com o propósito pretendido. 
 
@@ -387,7 +354,7 @@ Classe 1 &              31 &              47 \\
 \toprule
              {} & Precisão   &  Revocação & F1-Score &  Suporte \\
 \midrule
-       Classe 0 &      0,86  &    0,85    &     0,220 &     220 \\
+       Classe 0 &      0,86  &    0,85    &     0,85 &     220 \\
        Classe 1 &      0,59  &    0,60    &     0,59 &       78 \\
              {} &        {}  &      {}    &       {} &       {} \\
        Acurácia &        {}  &      {}    &     0,79 &      298 \\
@@ -399,33 +366,153 @@ Média Ponderada &      0,79  &    0,79    &     0,79 &      298 \\
 \end{table}%
 
 
-É possível observar na matriz de confusão (\autoref{tab_00600_desempenho_final_modelo_texto}) 187 \sigla{VN}{verdadeiros negativos} e 47 \sigla{VP}{verdadeiros positivos} que somam um total de 234 classificações corretas representando uma acurácia geral de aproximadamente 0,79. Ao avaliar os resultados por classe (\autoref{tab_00700_desempenho_final_modelo_texto}), observa-se que o modelo possui uma precisão para a classe 0 (0,86) bem superior à da classe 1 (0,59). O modelo apresenta uma acurácia de 0,79, porém, a acurácia balanceada foi de 0,72. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade de observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0.72 e a curva ROC é apresentada na \autoref{fig_00410_roc_auc_dados_estr}.
+É possível observar na matriz de confusão (\autoref{tab_00600_desempenho_final_modelo_texto}) 187 \sigla{VN}{verdadeiros negativos} e 47 \sigla{VP}{verdadeiros positivos} que somam um total de 234 classificações corretas representando uma acurácia geral de aproximadamente 0,79. Ao avaliar os resultados por classe (\autoref{tab_00700_desempenho_final_modelo_texto}), observa-se que o modelo possui uma precisão para a classe 0 (0,86) bem superior à da classe 1 (0,59). O modelo apresenta uma acurácia de 0,79, porém, a acurácia balanceada foi de 0,72. Essa diferença se dá por que a acurácia balanceada é ponderada de acordo com a quantidade de observações de cada classe no \textit{dataset} de testes. A classe 0 ocorre 2,82 vezes mais do que a classe 1, neste caso. O score \textit{roc\_auc} foi de 0,72 e a curva ROC é apresentada na \autoref{fig_00600_roc_auc_texto}.
 
 \begin{figure}[htbp]
-    \caption{Distribuição dos scores por métrica e modelo }
-    \label{fig_00500_comparacao_score_modelos_texto}
+    \caption{Curva Característica de Operação do Receptor (ROC)}
+    \label{fig_00600_roc_auc_texto}
     \begin{center}
-        \includegraphics[width=\columnwidth]{images/fig_00500_comparacao_score_modelos_texto.png}
+        \includegraphics[width=\columnwidth]{images/fig_00600_roc_auc_texto.png}
     \end{center}
 \legend{Fonte: Autor.}
 \end{figure}
 
+De forma geral, pode-se afirmar que este modelo teve um desempenho bem parecido com o modelo proposto na \autoref{section:modelo_dados_estruturados}. Talvez levemente inferior. Mas, ainda assim, com um poder de discriminação entre as classes razoável, conforme observa-se na \autoref{fig_00600_roc_auc_texto}.
 
-\section{Combinação de Modelos}
-pq combinar?
+\section{Combinação dos Modelos}
 
-dados presentes na denuncia
+Nesta seção, avalia-se a possibilidade de combinar os modelos obtidos nas seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}. O objetivo aqui é identificar se algum tipo de combinação pode melhorar o desempenho da classificação em relação aos desempenhos isolados de cada modelo. 
 
-dados derivados do que se ve na denuncia ajudam
-
-modelos se complementam?
+Após aplicar-se as correlações de Pearson e Spearman nas probabilidades (para a classe positiva) previstas pelos dois modelos, para os dados de teste, obtém-se, respectivamente, os coeficientes 0,6879 e 0,6419. Por esta razão, entende-se que há uma certa quantidade de registros nos quais os modelos possivelmente classificam de forma diferente. Assim, foram testadas 3 combinações possíveis. A menor, a maior e a média das probabilidades, para a classe positiva, previstas pelos dois modelos, para cada registro do conjunto de testes.
 
 
+\subsection{Combinação dos modelos pela menor probabilidade}
+
+Neste cenário, foram aplicados os dois modelos nos dados de teste. Para cada registro utilizou-se a menor probabilidade obtida entre os modelos e a outra foi descartada. Entende-se que, neste caso, tem-se uma classificação mais pessimista ou conservadora pois se, ao menos, um dos modelos indicar uma probabilidade abaixo de 0,5, o registro será classificado como pertencente à classe 0. O resultado desta combinação pode ser avaliado nas tabelas \ref{tab_00800_desempenho_final_modelo_comb_menor} e \ref{tab_00900_desempenho_final_modelo_comb_menor}.
+
+\begin{table}[htbp]
+\caption{Matriz de confusão do modelo, avaliando-se pelos dados de teste}
+\label{tab_00800_desempenho_final_modelo_comb_menor}
+\small
+\centering
+\begin{tabular}{lrr}
+\toprule
+      {} &  Predito como 0 &  Predito como 1 \\
+\midrule
+Classe 0 &             204 &              16 \\
+Classe 1 &              39 &              39 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+\begin{table}[htbp]
+\caption{Relatório de classificação, avaliando-se pelos dados de teste}
+\label{tab_00900_desempenho_final_modelo_comb_menor}
+\small
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+             {} & Precisão   &  Revocação & F1-Score &  Suporte \\
+\midrule
+       Classe 0 &      0,84  &    0,93    &     0,88 &      220 \\
+       Classe 1 &      0,71  &    0,50    &     0,59 &       78 \\
+             {} &        {}  &      {}    &       {} &       {} \\
+       Acurácia &        {}  &      {}    &     0,79 &      298 \\
+          Média &      0,77  &    0,71    &     0,73 &      298 \\
+Média Ponderada &      0,81  &    0,82    &     0,80 &      298 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+Esta combinação leva o modelo, de uma forma geral, a rejeitar mais denúncias. Isso ocasiona um aumento de precisão para ambas as classes, entretanto, a revocação ou taxa de verdadeiros positivos cai bastante. Neste caso tem-se um aumento considerável na quantidade de falsos negativos. Esse comportamento não é interessante para o problema em questão. O \textit{ROC AUC score} foi de 0,83 o \textit{balanced accuracy score} foi de 0,71. Houve uma melhora na métrica ROC AUC e uma piora na acurácia balanceada quando comparado com os modelos das seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}.
+
+\subsection{Combinação dos modelos pela maior probabilidade}
+
+Neste cenário, utilizou-se, para cada registro a maior probabilidade obtida entre os modelos e a outra foi descartada. Entende-se que, neste caso, tem-se uma classificação mais otimista ou arrojada pois se, ao menos, um dos modelos indicar uma probabilidade acima de 0,5, o registro será classificado como pertencente à classe 1. O resultado desta combinação pode ser avaliado nas tabelas \ref{tab_001000_desempenho_final_modelo_comb_maior} e \ref{tab_001100_desempenho_final_modelo_comb_maior}.
+
+\begin{table}[htbp]
+\caption{Matriz de confusão do modelo, avaliando-se pelos dados de teste}
+\label{tab_001000_desempenho_final_modelo_comb_maior}
+\small
+\centering
+\begin{tabular}{lrr}
+\toprule
+      {} &  Predito como 0 &  Predito como 1 \\
+\midrule
+Classe 0 &             171 &              49 \\
+Classe 1 &              20 &              58 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+\begin{table}[htbp]
+\caption{Relatório de classificação, avaliando-se pelos dados de teste}
+\label{tab_001100_desempenho_final_modelo_comb_maior}
+\small
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+             {} & Precisão   &  Revocação & F1-Score &  Suporte \\
+\midrule
+       Classe 0 &      0,90  &    0,78    &     0,83 &      220 \\
+       Classe 1 &      0,54  &    0,74    &     0,63 &       78 \\
+             {} &        {}  &      {}    &       {} &       {} \\
+       Acurácia &        {}  &      {}    &     0,77 &      298 \\
+          Média &      0,72  &    0,76    &     0,73 &      298 \\
+Média Ponderada &      0,80  &    0,77    &     0,78 &      298 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+Esta combinação leva o modelo, de uma forma geral, a aceitar mais denúncias. Isso ocasiona uma diminuição de precisão para a classe positiva, entretanto, a revocação ou taxa de verdadeiros positivos aumenta consideravelmente. Neste caso, tem-se um aumento considerável na quantidade de falsos positivos. Esse comportamento pode ser aceitável para o problema em questão. O \textit{ROC AUC score} foi de 0,85 o \textit{balanced accuracy score} foi de 0,76. Houve uma melhora em ambas as métricas quando comparado com os modelos das seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}.
 
 
-% \section{Modelo Escolhido}
+\subsection{Combinação dos modelos pela média das probabilidades}
 
-% \section{Desempenho do Modelo em Produção}
+Neste cenário, utilizou-se, para cada registro a média das probabilidades obtidas entre os modelos. Entende-se que, neste caso, tem-se uma classificação mais equilibrada. O resultado desta combinação pode ser avaliado nas tabelas \ref{tab_001200_desempenho_final_modelo_comb_media} e \ref{tab_001300_desempenho_final_modelo_comb_media}.
 
-% # TODO: autoencoder
+\begin{table}[htbp]
+\caption{Matriz de confusão do modelo, avaliando-se pelos dados de teste}
+\label{tab_001200_desempenho_final_modelo_comb_media}
+\small
+\centering
+\begin{tabular}{lrr}
+\toprule
+      {} &  Predito como 0 &  Predito como 1 \\
+\midrule
+Classe 0 &             192 &              28 \\
+Classe 1 &              34 &              44 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
 
+\begin{table}[htbp]
+\caption{Relatório de classificação, avaliando-se pelos dados de teste}
+\label{tab_001300_desempenho_final_modelo_comb_media}
+\small
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+             {} & Precisão   &  Revocação & F1-Score &  Suporte \\
+\midrule
+       Classe 0 &      0,85  &    0,87    &     0,86 &      220 \\
+       Classe 1 &      0,61  &    0,56    &     0,59 &       78 \\
+             {} &        {}  &      {}    &       {} &       {} \\
+       Acurácia &        {}  &      {}    &     0,79 &      298 \\
+          Média &      0,73  &    0,72    &     0,72 &      298 \\
+Média Ponderada &      0,79  &    0,79    &     0,79 &      298 \\
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
+
+Observa-se um equilíbrio maior entre precisão e revocação para ambas as classes. Entretanto há uma diminuição no número de acertos da classe positiva e, consequentemente, um aumento no número de falsos positivos. O \textit{ROC AUC score} foi de 0,86 o \textit{balanced accuracy score} foi de 0,72. Houve uma melhora para ROC AUC e uma piora para a acurácia balanceada quando comparado com os modelos das seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}.
+
+\section{Discussão}
+
+Teste

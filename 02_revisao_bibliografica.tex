@@ -5,6 +5,7 @@
 Neste capítulo são apresentados alguns trabalhos relacionados ao tema proposto e, também, além do embasamento teórico necessário para compreender conceito e técnicas que serão utilizados ou referenciados no desenvolvimento deste trabalho.
 
 \section{Trabalhos Relacionados}
+\label{section:trabalhos_relacionados}
 
 A utilização de reclamações e denúncias como subsídio para melhorar a qualidade dos serviços oferecidos pelo Estado é uma prática comum. Com a crescente evolução de técnicas e capacidade computacional nos últimos anos, é natural observar um aumento do seu emprego na automatização de processos relacionados à classificação e análise desse conjunto imenso de informações não estruturadas que chegam aos órgãos públicos constantemente. Esse entendimento de que associar tecnologia, serviços governamentais e participação social é uma tendência, é afirmado em \citeonline{mehr2017artificial} e enfatizado em \citeonline[p.1]{Chun2010}:
 
@@ -18,9 +19,7 @@ Em \citeonline{liyanage2018matters}, propõe-se uma forma automatizada de priori
 
 Outra forma interessante de automatizar serviços aos cidadãos pode ser vista em \citeonline{Tjandra2015}. Neste trabalho, apresenta-se a forma como a administração da cidade de Surabaia na Indonésia, segunda mais importante do país, resolve o direcionamento de denúncias e outras comunicações. A combinação de algumas técnicas de preprocessamento de textos e o uso de um algoritmo de classificação de documentos permitem apontar para qual departamento da cidade a denúncia ou comunicação deverá ser direcionada.
 
-O que todos os exemplos mencionados anteriormente têm em comum é o uso de informações não estruturadas, reportadas por cidadãos, acerca de assuntos diversos e em uma escala difícil de atender apenas com a análise manual realizada por pessoas. Ao mesmo tempo em que a necessidade de processar e compreender corretamente as demandas torna-se cada vez mais essencial para prestar um serviço melhor ao cidadão, o grande desafio em questão é justamente como fazer isso.
-
-\textbf{TODO: complementar com quadro organizado por ano contendo os pontos fortes e fracos nas soluções encontradas}
+Talvez o trabalho mais próximo do que se pretende avaliar no presente estudo, seja o proposto em \citeonline{Coussement2008}. Nele, os autores incluem como features do modelo, informações sobre o estilo de escrita tais como quantidade de verbos, pronomes, palavras únicas, palavras de negação, palavras afirmativas, artigos, preposições entre outras informações derivadas do texto. A utilização destes elementos de estilo linguístico juntamente com vetores de palavras como TF-IDF, tradicionalmente utilizados em atividades de classificação de documentos, aumenta significativamente a performance de um classificador de reclamações ou denúncias.
 
 \section{Processamento de Linguagem Natural}
 
@@ -55,14 +54,54 @@ Por fim, o \sigla{BERT}{\textit{Bidirectional Encoder Representations from Trans
 
 \sigla{NER}{\textit{Named Entity Recognition}} é uma das áreas de pesquisa de PLN na qual tenta-se identificar entidades específicas como nomes de pessoas, locais, nomes de empresas e números em textos \cite{nadeau2007survey}. Por vezes, a extração de algumas informações chave do texto pode ser suficiente para cumprir um propósito específico. Assim, o treinamento de modelos com o propósito de reconhecer determinadas entidades em textos é muito comum em diversas áreas. Existem abordagens não supervisionadas que podem ser utilizadas, entretanto, o mais comum é que se forneçam textos com marcações informando onde está e qual o tipo de entidade está presente no texto. Assim os modelos tentam encontrar informações específicas de contexto que estejam presentes sempre que há a referência a uma entidade. Isso é muito importante quando há ambiguidades entre as entidades. Por exemplo, o nome de uma pessoa e o nome de uma rua podem ser o mesmo, mas como é possível identificar que trata-se de uma entidade e não outra. Por essa e outras razões esta é uma tarefa não trivial dentro da NLP e técnicas de aprendizado de máquina e aprendizado profundo vem sendo empregadas nos últimos anos para a evolução dos resultados.
 
-\section{Aprendizado de Máquina}
+\section{Discussão}
 
-TODO: será complementado posteriormente
+O que todos os exemplos mencionados na \autoref{section:trabalhos_relacionados} têm em comum é o uso de informações não estruturadas, reportadas por cidadãos, acerca de assuntos diversos e em uma escala difícil de atender apenas com a análise manual realizada por pessoas. Ao mesmo tempo em que a necessidade de processar e compreender corretamente as demandas torna-se cada vez mais essencial para prestar um serviço melhor ao cidadão, o grande desafio em questão é justamente como fazer isso.
 
-\subsection{Aprendizado Supervisionado}
+Todos os trabalhos analisados se utilizam das técnicas de pré-processamento de texto e extração de vetores de palavras por documento com a finalidade de classificar documentos, \textit{e-mails} ou textos. Entretanto, apenas \citeonline{Coussement2008} utiliza informações derivadas do texto (além das palavras) para melhorar o modelo de classificação. 
 
-TODO: será complementado posteriormente
+Enquanto o trabalho de \citeonline{Coussement2008} utiliza estatísticas de estilo de escrita na tentativa de extrair mais e melhores características dos documentos, o presente trabalho propõe a extração de entidades nomeadas e o uso das mesmas como características que possam acentuar ou aproximar diferenças entre as denúncias recebidas pela CGU. Ainda, propõe-se o uso de outras informações derivadas das entidades nomeadas encontradas no texto enriquecendo ainda mais as informações possíveis de se utilizar em um modelo de classificação. A \autoref{tab_01000_visao_geral_dataset} apresenta uma visão comparativa para as soluções avaliadas neste trabalho. A principal contribuição deste trabalho é a utilização de bases oficiais do governo federal para qualificar e ampliar informações de uma denúncia a partir de entidades nomeadas encontradas no corpo ou anexos de uma denúncia.
 
-\subsection{Aprendizado Não Supervisionado}
 
-TODO: será complementado posteriormente
+\begin{table}[htbp]
+\caption{Comparativo das soluções avaliadas}
+\label{tab_01000_visao_geral_dataset}
+\tiny
+\centering
+\begin{tabular}{p{0.24\columnwidth}p{0.195\columnwidth}p{0.24\columnwidth}p{0.22\columnwidth}}
+\toprule
+     Solução Avaliada &
+     Pre-processamento de texto &
+     Vetores de frequência de palavras &
+     Informações derivadas do texto \\
+\midrule
+
+    \citeonline{Coussement2008} &
+    Sim &
+    Sim &
+    Sim (estilo linguístico)\\
+    
+    \citeonline{Tjandra2015} &
+    Sim &
+    Sim &
+    Não \\
+      
+    \citeonline{mebane2016frauds} &
+    Sim &
+    Sim &
+    Não \\
+      
+    \citeonline{liyanage2018matters} &
+    Sim &
+    Sim &
+    Não \\
+    
+    Presente estudo (2020) &
+    Sim &
+    Sim &
+    Sim (entidades nomeadas)\\
+      
+\bottomrule
+\end{tabular}
+\legend{Fonte: Autor.}
+\end{table}%
