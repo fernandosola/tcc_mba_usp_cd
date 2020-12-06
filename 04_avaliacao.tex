@@ -25,7 +25,7 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
 
 A primeira tarefa realizada nesta etapa foi a avaliação da representatividade das \textit{features} obtidas na tentativa de explicar a variável alvo. O objetivo é diminuir a complexidade do modelo. Por questões de objetividade e tempo, optou-se por um processo automatizado.
 
-O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k\ \in\ \text{números pares}$.
+O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do Python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} \cite{breiman2001random}. Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k=2n,\ n \in \mathbb{N}$.
 
 Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos.
 
@@ -34,21 +34,20 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \label{tab_00200_metricas_numero_features}
 \small
 \centering
-\begin{tabular}{rrrrr}
+\begin{tabular}{rrrr}
 \toprule
- Número de Features &  Average Precision &  Balanced Accuracy &  ROC AUC &  Média \\
+ Número de Features &  Average Precision &  Balanced Accuracy &  ROC AUC  \\
 \midrule
-                 10 &             0,4880 &             0,6166 &   0,7150 & 0,6066 \\
+                 10 &             0,4880 &             0,6166 &   0,7150  \\
                  \textbf{20} &             
                  \textbf{0,5133} &             
                  \textbf{0,6460} &   
-                 \textbf{0,7281} & 
-                 \textbf{0,6291} \\
-                 30 &             0,5108 &             0,6432 &   0,7246 & 0,6262 \\
-                 40 &             0,5266 &             0,6531 &   0,7366 & 0,6387 \\
-                 50 &             0,5260 &             0,6471 &   0,7345 & 0,6359 \\
-                 60 &             0,5263 &             0,6403 &   0,7332 & 0,6333 \\
-                 70 &             0,5275 &             0,6487 &   0,7354 & 0,6372 \\
+                 \textbf{0,7281} \\
+                 30 &             0,5108 &             0,6432 &   0,7246  \\
+                 40 &             0,5266 &             0,6531 &   0,7366  \\
+                 50 &             0,5260 &             0,6471 &   0,7345  \\
+                 60 &             0,5263 &             0,6403 &   0,7332  \\
+                 70 &             0,5275 &             0,6487 &   0,7354  \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
