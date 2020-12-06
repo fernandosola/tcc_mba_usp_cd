@@ -1,6 +1,6 @@
 \section{Considerações Iniciais}
 
-Neste capítulo pretende-se detalhar melhor o problema a ser resolvido. Posteriormente, será descrito todo o \textit{pipeline} de coleta e tratamentos dos dados para a montagem do \textit{dataset} que será utilizado para treinamento e avaliação do modelo proposto.
+Neste capítulo pretende-se detalhar melhor o problema a ser resolvido. Posteriormente, será descrito todo o \textit{pipeline} de coleta e tratamentos dos dados para a montagem do conjunto de dados que será utilizado para treinamento e avaliação do modelo proposto.
 
 \section{Detalhamento do Problema}
 
@@ -34,7 +34,7 @@ Conforme pode ser visto na \autoref{fig_00100_quantidade_denuncias}, a maior par
 
 \subsection{Extração de Textos dos Anexos}
 
-Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grande de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em python não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca em python que conseguisse sozinha lidar com qualquer tipo de arquivo. Por outro lado, escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
+Ao avaliar os anexos presentes em todas as denúncias cadastradas, identificou-se uma variedade muito grande de tipos de arquivos. Por essa razão, implementar um código, mesmo que utilizando bibliotecas prontas em Python \cite{rossum2009}, não se provou uma alternativa viável. Não foi possível identificar nenhuma biblioteca que conseguisse, sozinha, lidar com qualquer tipo de arquivo. Por outro lado, escrever um código para identificar o tipo de arquivo e realizar a chamada para uma biblioteca especializada no tipo de arquivo em questão não seria uma tarefa trivial e fugiria demais do escopo do trabalho.
 
 Existe, no conjunto de dados avaliado por este trabalho, um total de 1801 anexos. A \autoref{fig_00050_quantidade_anexos_tipo_arquivo}, apresenta a quantidade de anexos de acordo com o tipo de arquivo.
 
@@ -49,7 +49,7 @@ Existe, no conjunto de dados avaliado por este trabalho, um total de 1801 anexos
 
 Assim, para possibilitar a extração dos textos dos anexos, optou-se por utilizar uma ferramenta chamada Apache Tika (disponível em \url{http://tika.apache.org}) implementada em java. Esta ferramenta identifica automaticamente o tipo de arquivo e extrai o conteúdo textual e os metadados. A ferramenta, ainda, é capaz de realizar \sigla{OCR}{\textit{Optical Character Recognition}} quando há imagens dentro de arquivos dos tipo pdf, xls, doc, entre outros ou quando o arquivo é uma imagem.
 
-Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um serviço e utilizou-se uma biblioteca em python para realizar as chamadas ao serviço passando os arquivos que deveriam ter o conteúdo extraído.
+Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um serviço e utilizou-se uma biblioteca em Python para realizar as chamadas ao serviço passando os arquivos que deveriam ter o conteúdo extraído.
 
 \subsection{Extração de Dados Estruturados}
 
