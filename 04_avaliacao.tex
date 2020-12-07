@@ -27,7 +27,7 @@ A primeira tarefa realizada nesta etapa foi a avaliação da representatividade 
 
 O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do Python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} \cite{breiman2001random}. Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k=2n,\ n \in \mathbb{N}$.
 
-Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos.
+Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos e a \autoref{fig_00040_kneeplot}.
 
 \begin{table}[htbp]
 \caption{Métricas de acordo com o número de features}
@@ -53,7 +53,16 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \legend{Fonte: Autor.}
 \end{table}%
 
-Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho médio dos scores não é tão relevante e a utilização do conjunto completo aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 mais relevantes na etapa de modelagem.
+\begin{figure}[htbp]
+    \caption{Métricas de acordo com o número de features}
+    \label{fig_00040_kneeplot}
+    \begin{center}
+        \includegraphics[width=\columnwidth]{images/fig_00040_kneeplot.png}
+    \end{center}
+\legend{Fonte: Autor.}
+\end{figure}
+
+Com base nos resultados avaliou-se que, a partir de 20 \textit{features}, o ganho dos scores não é tão relevante e a utilização do conjunto completo aumentaria o tempo de treinamento e a complexidade do modelo. Assim, escolheu-se utilizar as 20 mais relevantes na etapa de modelagem.
 
 A decisão sobre qual algoritmo utilizar para a geração do modelo foi tomada com base na comparação do score de área sob a curva ROC (\textit{roc\_auc}) obtido em diversos modelos testados. Esta métrica foi escolhida por ser uma métrica interessante para avaliação do desempenho do modelo com foco na classe positiva, neste caso a classe 1.
 
