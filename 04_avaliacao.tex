@@ -5,19 +5,19 @@ Neste capítulo, serão descritos os recursos de hardware e software utilizados,
 \section{Recursos Utilizados}
 \label{section:recursos_utilizados}
 
-Para a realização dos experimentos, utilizou-se um computador com processador Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz de 8 núcleos (4 reais, 4 \textit{hyperthreading}), com 32 GB de memória RAM e 500 GB de SSD. O sistema operacional utilizado foi o Windows 10 Home 64 bits. Utilizou-se a distribuição Anaconda (Python 3.7, 64 bits). As principais bibliotecas Python utilizadas são listadas as seguir:
+Para a realização dos experimentos, utilizou-se um computador com processador Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz de 8 núcleos lógicos (4 núcleos físicos com  \textit{hyperthreading}), com 32 GB de memória RAM e 500 GB de SSD. O sistema operacional utilizado foi o Windows 10 Home 64 bits. Utilizou-se a distribuição Anaconda (Python 3.7, 64 bits). As principais bibliotecas Python utilizadas são listadas as seguir:
 
 \begin{itemize}
-    \item imbalanced-learn==0.7.0
-    \item joblib==0.17.0
-    \item lightgbm==3.0.0
-    \item numpy==1.19.2
-    \item pandas==1.1.3
-    \item scikit-learn==0.23.2
-    \item scikit-optimize==0.8.1
-    \item scipy==1.5.3
-    \item tika==1.24
-    \item xgboost==1.2.1
+    \item imbalanced-learn==0.7.0;
+    \item joblib==0.17.0;
+    \item lightgbm==3.0.0;
+    \item numpy==1.19.2;
+    \item pandas==1.1.3;
+    \item scikit-learn==0.23.2;
+    \item scikit-optimize==0.8.1;
+    \item scipy==1.5.3;
+    \item tika==1.24;
+    \item xgboost==1.2.1.
 \end{itemize}
 
 \section{Experimentos Propostos}
@@ -429,5 +429,3 @@ A \autoref{tab_001400_desempenho_final_tabela_comparativa} apresenta as principa
 Após uma análise criteriosa das métricas de cada modelo e das combinações propostas, optou-se por utilizar a combinação de resultados pela maior probabilidade. Ou seja, o decisor otimista. Ele apresenta a maior acurácia balanceada e a segunda maior área abaixo da curva ROC. Além disso, o F1-Score para a classe positiva também teve um bom desempenho em comparação às outras opções. A precisão média não é a melhor, mas a explicação para isto é que escolhe-se aumentar a revocação para a classe 1 em detrimento da sua precisão. Assim, aumenta-se a quantidade de verdadeiros positivos e, por consequência, falsos positivos. Entretanto, diminui-se consideravelmente a quantidade de falsos negativos conforme a premissa adotada para o problema. Mantém-se uma revocação boa e balanceada para ambas as classes.
 
 Entende-se que a metodologia proposta atinge o objetivo de melhorar a classificação de denúncias aptas. O modelo baseado apenas nos dados estruturados evidencia esta afirmação. Ou seja, a derivação de informações a partir de elementos chave encontrados nas denúncias efetivamente colabora com o processo de classificação. Ainda assim, ao avaliar-se as previsões obtidas pelos dois modelos, constata-se que, em muitos casos, ambos se complementam. A consequência disso foi um melhor desempenho obtido na combinação otimista destes modelos em relação aos seus desempenhos isolados.
-
-Entende-se que a metodologia proposta pode ser abstraída e utilizada em outras áreas como, por exemplo, análise de denúncias policiais ou reclamações em ouvidorias de empresas. Obviamente a extração de entidades e a sua qualificação necessitariam de adaptação para o novo propósito. Algumas perguntas essenciais neste caso seriam: quais entidades há interesse em se identificar? Quais informações derivadas destas entidades são interessantes de se obter? Quais bases de dados são necessárias para esta tarefa?
