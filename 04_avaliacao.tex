@@ -159,7 +159,7 @@ O conjunto de testes utilizado possui 298 registros. Assim, como é possível ob
 
 Pela análise da curva ROC, entende-se que seria possível elevar o \textit{recall} do modelo diminuindo-se o limiar utilizado para computar as classes positivas e negativas. Com o limiar em 0,5 (padrão), tem-se uma taxa de falsos positivos de 0,14 e um \textit{recall} de 0,64. Entretanto, ao mover-se o limiar para 0.37, tem-se uma taxa de falsos positivos de 0,28 e um \textit{recall} de 0,76. Talvez seja um \textit{tradeoff} interessante pois o falso positivo de uma denúncia é menos problemático do que um falso negativo.
 
-Em geral, avalia-se que a capacidade distinção entre as classes aprendida pelo modelo é bastante razoável.
+Em geral, avalia-se que a capacidade de distinção entre as classes, aprendida pelo modelo, é bastante razoável.
 
 \subsection{Modelo considerando apenas os textos}
 \label{section:modelo_texto}
@@ -394,7 +394,7 @@ Média Ponderada &      0,79  &    0,79    &     0,79 &      298 \\
 \legend{Fonte: Autor.}
 \end{table}%
 
-Observa-se um equilíbrio maior entre precisão e revocação para ambas as classes. Entretanto há uma diminuição no número de acertos da classe positiva e, consequentemente, um aumento no número de falsos positivos. O \textit{ROC AUC score} foi de 0,86 o \textit{balanced accuracy score} foi de 0,72. Houve uma melhora para ROC AUC e uma piora para a acurácia balanceada quando comparado com os modelos das seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}.
+Observa-se um equilíbrio maior entre precisão e revocação para ambas as classes. Entretanto há uma diminuição no número de acertos da classe positiva e, consequentemente, um aumento no número de falsos negativos. O \textit{ROC AUC score} foi de 0,86 o \textit{balanced accuracy score} foi de 0,72. Houve uma melhora para ROC AUC e uma piora para a acurácia balanceada quando comparado com os modelos das seções \ref{section:modelo_dados_estruturados} e \ref{section:modelo_texto}.
 
 \section{Discussão}
 
