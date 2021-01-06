@@ -2,29 +2,29 @@
 
 No ambiente de negócios, o gerenciamento de reclamações de clientes tem se tornado um fator crítico de sucesso para manter um bom relacionamento e a fidelidade de clientes, conforme afirmam \citeonline{Coussement2008}. No ambiente da administração pública, onde o cidadão é o cliente, a prestação de serviços à população deve ser guiada por princípios como qualidade, eficiência e economicidade. Assim, diversos canais são disponibilizados aos cidadãos para entender melhor suas necessidades ou mesmo receber informações importantes sobre anomalias ou ilicitudes identificadas.
 
-Centenas de denúncias são enviadas diariamente através da Plataforma Integrada de Ouvidoria e Acesso à Informação (Fala.BR). Para que possam ser apuradas, primeiramente elas precisam ser triadas por uma equipe da \sigla{OGU}{Ouvidoria-Geral da União}, área integrante da \sigla{CGU}{Controladoria-Geral da União}, responsável por exercer as competências de órgão central do Sistema de Ouvidoria do Poder Executivo federal. O processo de triagem consiste em avaliar se há o mínimo de informações necessárias presente na denúncia e, caso haja, encaminhar a denúncia para que uma área competente realize a apuração dos fatos denunciados.
+Centenas de denúncias são enviadas diariamente através da Plataforma Integrada de Ouvidoria e Acesso à Informação (Fala.BR). Para que possam ser apuradas, primeiramente elas precisam ser triadas por uma equipe da \sigla{OGU}{Ouvidoria-Geral da União}, área integrante da \sigla{CGU}{Controladoria-Geral da União}, responsável por exercer as competências de órgão central do sistema de ouvidoria do poder executivo federal. O processo de triagem consiste em avaliar se há o mínimo de informações necessárias presente na denúncia e, caso haja, encaminhar a denúncia para que uma área competente realize a apuração dos fatos denunciados.
 
-Em média, apenas 30\% das denúncias que chegam são consideradas aptas pelos especialistas da Ouvidoria. Com isso, uma quantidade enorme de esforço é gasta pela equipe em denúncias que não possuem o mínimo de informação para qualquer tipo de apuração. O grande volume de denúncias é um obstáculo que exige uma grande equipe trabalhando no processo de triagem.
+Em média, apenas 30\% das denúncias que chegam são consideradas aptas pelos especialistas da Ouvidoria. Com isso, uma quantidade alta de esforço é gasta pela equipe em denúncias que não possuem o mínimo de informação para qualquer tipo de apuração. O volume de denúncias é um obstáculo que exige uma grande equipe trabalhando no processo de triagem.
 
-Assim, a criação de um modelo de classificação que atribua o grau de risco de aptidão para uma denúncia permite direcionar melhor os esforços das equipes responsáveis pelo processo de triagem. O objetivo desta pesquisa é propor uma metodologia que permita a implementação deste modelo nos processo de triagem de denúncias da OGU. 
+Assim, a criação de um modelo de classificação que habilite denúncias permite direcionar melhor os esforços das equipes responsáveis pelo processo de triagem. O objetivo desta pesquisa é propor uma metodologia que permita a implementação deste modelo no processo de triagem de denúncias da OGU. 
 
 \sigla*{CPF}{Cadastro Nacional de Pessoa Física}
 \sigla*{CNPJ}{Cadastro Nacional de Pessoa Jurídica}
 
 O dados de denúncias, recebidos através do sistema Fala.BR, possuem poucos campos estruturados. A essência da denúncia está contida no texto escrito pelo cidadão e nos diversos anexos que, por vezes, são enviados em conjunto. Para uma pessoa, a análise de uma denúncia, na maioria das vezes é uma tarefa simples. Basicamente, o analista procura por elementos no texto que possam ser confirmados por consultas em sistemas oficiais como nomes de pessoas, números de CPF , números de CNPJ, endereços, órgãos, contratos, convênios, valores, além de outros elementos que possam remeter a uma certa gravidade sobre o problema exposto pelo cidadão.
 
-Realizar este tipo de análise computacionalmente não é uma tarefa trivial. O \sigla{PLN}{Processamento de Linguagem Natural} é uma subárea da \sigla{IA}{Inteligência Artificial} cujo o foco é a extração de informação. Este campo é vasto e é possível, por exemplo, utilizar abordagens estatísticas como em \citeonline{Manning1999} ou, ainda, abordagens simbólicas como em \citeonline{Justeson1995}.
+Realizar este tipo de análise computacionalmente não é uma tarefa trivial. O \sigla{NLP}{Processamento de Linguagem Natural} é uma subárea da \sigla{IA}{Inteligência Artificial} cujo o foco é a extração de informação. Este campo é vasto e é possível, por exemplo, utilizar abordagens estatísticas como em \citeonline{Manning1999} ou, ainda, abordagens simbólicas como em \citeonline{Justeson1995}.
 
-Assim, para que se possa formular uma metodologia eficaz, será necessário compreender as diferentes formas de extração de informação à partir de textos e, ainda, analisar as principais técnicas e/ou algoritmos que podem ser utilizados para criar um modelo que atenda às necessidades propostas.
+Assim, para que se possa formular uma metodologia eficaz, será necessário compreender as diferentes formas de extração de informação a partir de textos e, ainda, analisar as principais técnicas e/ou algoritmos que podem ser utilizados para criar um modelo que atenda às necessidades propostas.
 
 \section{Objetivos}
 
-Considerando diversos avanços na área de processamento de linguagem natural, este projeto de pesquisa propõe a criação de um modelo de classificação que atribua uma faixa de risco para novas denúncias.
+Considerando os diversos avanços na área de processamento de linguagem natural, este projeto de pesquisa propõe a criação de um modelo de classificação que atribua uma faixa de risco para novas denúncias.
 
 Objetivos específicos:
-a) investigar formas de extração de features a partir de textos livres e dados não estruturados;
+a) investigar formas de extração de \textit{features} a partir de textos livres e dados não estruturados;
 b) estudar os modelos de classificação mais comumente utilizados em processamento de linguagem natural;
-c) avaliar as melhores formas de extração de features de acordo com os modelos pesquisados;
+c) avaliar as melhores formas de extração de \textit{features} de acordo com os modelos pesquisados;
 d) comparar a performance entre diferentes modelos possíveis utilizando dados reais.
 
 

@@ -17,7 +17,7 @@ A próxima seção detalha os desafios enfrentados e como foram resolvidos.
 
 \section{Coleta de Dados}
 
-O processo de coleta e análise de dados para utilizar em treinamentos de aprendizado de máquina, geralmente, é composto por uma fase de análise exploratória. Em muitos casos, os dados estão estruturados e o maior trabalho é uma análise onde verifica-se duplicidades, dados faltantes, outliers e outras peculiaridades comuns em dados provenientes de sistemas informatizados. 
+O processo de coleta e análise de dados para utilizar em treinamentos de aprendizado de máquina, geralmente, é composto por uma fase de análise exploratória. Em muitos casos, os dados estão estruturados e o maior trabalho é uma análise em que se verificam duplicidades, dados faltantes, \textit{outliers} e outras peculiaridades comuns em dados provenientes de sistemas informatizados. 
 Já, no caso deste trabalho, não há, diretamente, dados estruturados. As únicas informações que podem ser obtidas são o texto da denúncia e os anexos, quando informados. Assim, a análise das denúncias e o seu uso para um aprendizado supervisionado devem abranger técnicas de NLP.
 
 Como já foi mencionado, há rótulos sendo atribuídos às denúncias. Assim, o \textit{dataset} que será utilizado contém 1489 registros contendo informações da denúncia, anexos e a informação de grau de aptidão. Estes registros compreendem todas as denúncias cadastradas e que possuem rótulo atribuído entre 04/12/2019 e 23/06/2020.
@@ -80,11 +80,11 @@ O processo de qualificação tem por objetivo extrair outras características pa
 
 No caso de um CNPJ, como exemplo, podemos verificar se a empresa consta no \sigla{CADIN}{Cadastro Informativo de Créditos não Quitados do Setor Público Federal}, \sigla{CEPIM}{Cadastro de Entidades Privadas sem Fins Lucrativos}, se já teve outras sanções feitas pela administração pública federal, se a empresa fez doações a partidos políticos, entre outras.
 
-As qualificações encontradas podem ser utilizadas como features das denúncias.
+As qualificações encontradas podem ser utilizadas como \textit{features} das denúncias.
 
 \subsection{Preparação do \textit{Dataset}}
 
-Esta etapa consiste na consolidação, em \textit{features} ou características, de todas as informações encontradas nas etapas anteriores. Assim, realiza-se um agrupamento por origem de informações. Algumas características como materialidade são somadas outras como CPF de servidor público são contabilizadas. Dessa forma, para cada denúncia, há um registro com uma quantidade grande de colunas nas quais consolida-se todas as informações encontradas nas etapas anteriores. Por fim, inclui-se o rótulo. A \autoref{tab_00100_visao_geral_dataset} apresenta uma visão em alto nível de como o \textit{dataset} é montado bem como uma explicação da origem de algumas \textit{features} e sua forma de consolidação. 
+Esta etapa consiste na consolidação, em \textit{features} ou características, de todas as informações encontradas nas etapas anteriores. Assim, realiza-se um agrupamento por origem de informações. Algumas características como materialidade são somadas outras como CPF de servidor público são contabilizadas. Dessa forma, para cada denúncia, há um registro com uma quantidade grande de colunas nas quais consolidam-se todas as informações encontradas nas etapas anteriores. Por fim, inclui-se o rótulo. A \autoref{tab_00100_visao_geral_dataset} apresenta uma visão em alto nível de como o \textit{dataset} é montado bem como uma explicação da origem de algumas \textit{features} e sua forma de consolidação. 
 
 
 \begin{table}[htbp]
@@ -94,7 +94,7 @@ Esta etapa consiste na consolidação, em \textit{features} ou características,
 \centering
 \begin{tabular}{p{0.175\columnwidth}p{0.55\columnwidth}p{0.2\columnwidth}}
 \toprule
-     Feature &
+     \textit{Feature} &
      Descrição &
      Forma de Consolidação \\
 \midrule

@@ -23,7 +23,7 @@ Para a realização dos experimentos, utilizou-se um computador com processador 
 \section{Experimentos Propostos}
 \label{section:experimentos_propostos}
 
-Nesta seção, serão exploradas algumas possibilidades de uso das informações extraídas para construir classificadores. Desta forma, identifica-se algumas alternativas óbvias que devem ser avaliadas em um primeiro momento.
+Nesta seção, serão exploradas algumas possibilidades de uso das informações extraídas para construir classificadores. Desta forma, identificam-se algumas alternativas óbvias que devem ser avaliadas em um primeiro momento.
 
 A primeira trata-se de tentar construir um modelo apenas utilizando os dados estruturados extraídos dos textos. A segunda, tentar construir um modelo apenas com as informações textuais contidas nas denúncias e seus anexos. Por fim, uma combinação de ambas as alternativas.
 
@@ -48,13 +48,13 @@ O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \te
 Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos e a \autoref{fig_00040_kneeplot}.
 
 \begin{table}[htbp]
-\caption{Métricas de acordo com o número de features}
+\caption{Métricas de acordo com o número de \textit{features}}
 \label{tab_00200_metricas_numero_features}
 \small
 \centering
 \begin{tabular}{rrrr}
 \toprule
- Número de Features &  Average Precision &  Balanced Accuracy &  ROC AUC  \\
+ Número de \textit{Features} &  Average Precision &  Balanced Accuracy &  ROC AUC  \\
 \midrule
                  10 &             0,4880 &             0,6166 &   0,7150  \\
                  \textbf{20} &             
@@ -72,7 +72,7 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \end{table}%
 
 \begin{figure}[htbp]
-    \caption{Métricas de acordo com o número de features}
+    \caption{Métricas de acordo com o número de \textit{features}}
     \label{fig_00040_kneeplot}
     \begin{center}
         \includegraphics[width=\columnwidth]{images/fig_00040_kneeplot.png}
@@ -172,7 +172,7 @@ Para o propósito deste estudo, será avaliado o TF-IDF como técnica para extra
 Como exemplo, a \autoref{tab_00500_exemplo_tfidf} exibe algumas \textit{features} geradas pelo TF-IDF para as primeiras 10 denúncias do \textit{dataset} de treinamento.
 
 \begin{table}[htbp]
-\caption{Exemplo de features geradas pelo TF-IDF}
+\caption{Exemplo de \textit{features} geradas pelo TF-IDF}
 \label{tab_00500_exemplo_tfidf}
 \tiny
 \centering
@@ -426,6 +426,5 @@ A \autoref{tab_001400_desempenho_final_tabela_comparativa} apresenta as principa
 \legend{Fonte: Autor.}
 \end{table}%
 
-Após uma análise criteriosa das métricas de cada modelo e das combinações propostas, optou-se por utilizar a combinação de resultados pela maior probabilidade. Ou seja, o decisor otimista. Ele apresenta a maior acurácia balanceada e a segunda maior área abaixo da curva ROC. Além disso, o F1-Score para a classe positiva também teve um bom desempenho em comparação às outras opções. A precisão média não é a melhor, mas a explicação para isto é que escolhe-se aumentar a revocação para a classe 1 em detrimento da sua precisão. Assim, aumenta-se a quantidade de verdadeiros positivos e, por consequência, falsos positivos. Entretanto, diminui-se consideravelmente a quantidade de falsos negativos conforme a premissa adotada para o problema. Mantém-se uma revocação boa e balanceada para ambas as classes.
 
 Entende-se que a metodologia proposta atinge o objetivo de melhorar a classificação de denúncias aptas. O modelo baseado apenas nos dados estruturados evidencia esta afirmação. Ou seja, a derivação de informações a partir de elementos chave encontrados nas denúncias efetivamente colabora com o processo de classificação. Ainda assim, ao avaliar-se as previsões obtidas pelos dois modelos, constata-se que, em muitos casos, ambos se complementam. A consequência disso foi um melhor desempenho obtido na combinação otimista destes modelos em relação aos seus desempenhos isolados.
