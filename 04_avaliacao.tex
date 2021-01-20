@@ -45,7 +45,7 @@ A primeira tarefa realizada nesta etapa foi a avaliação da representatividade 
 
 O processo escolhido utiliza a classe \textit{SelectFromModel} da biblioteca \textit{scikit-learn} do Python \cite{scikit-learn}. Esta classe foi utilizada para selecionar as '\textit{k}' melhores \textit{features} após o treinamento de um \textit{RandomForestClassifier} \cite{breiman2001random}. Estas informações ficam armazenadas no atributo \textit{feature\_importances\_} do modelo. Foram realizados 39 testes para $for\ _k = 2,...,78\ \forall\ k=2n,\ n \in \mathbb{N}$.
 
-Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar os \textit{datasets} de treino e teste para descartar as não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos e a \autoref{fig_00040_kneeplot}.
+Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} com o parâmetro $max\_features = k$, equivalente a iteração. A classe então é utilizada para selecionar as k melhores \textit{features} e transformar o \textit{dataset} de treino para descartar aquelas não selecionadas. Com o \textit{dataset} de treino transformado, treina-se um novo \textit{RandomForestClassifier} e realiza-se a avaliação do modelo de acordo com as métricas de \textit{Average Precision}, \textit{Balanced Accuracy} e \textit{ROC AUC}. A tabela \autoref{tab_00200_metricas_numero_features} apresenta um resumo dos resultados obtidos e a \autoref{fig_00040_kneeplot}.
 
 \begin{table}[htbp]
 \caption{Métricas de acordo com o número de \textit{features}}
@@ -56,16 +56,17 @@ Em cada iteração, é criada uma instância da classe \textit{SelectFromModel} 
 \toprule
  Número de \textit{Features} &  Average Precision &  Balanced Accuracy &  ROC AUC  \\
 \midrule
-                 10 &             0,4880 &             0,6166 &   0,7150  \\
-                 \textbf{20} &             
-                 \textbf{0,5133} &             
-                 \textbf{0,6460} &   
-                 \textbf{0,7281} \\
-                 30 &             0,5108 &             0,6432 &   0,7246  \\
-                 40 &             0,5266 &             0,6531 &   0,7366  \\
-                 50 &             0,5260 &             0,6471 &   0,7345  \\
-                 60 &             0,5263 &             0,6403 &   0,7332  \\
-                 70 &             0,5275 &             0,6487 &   0,7354  \\
+                 
+                 10 &           0.538429 &           0.623408 &  0.721747 \\
+                 \textbf{20} &           
+                 \textbf{0.581019} &           
+                 \textbf{0.647302} &  
+                 \textbf{0.741056} \\
+                 30 &           0.579207 &           0.651423 &  0.740430 \\
+                 40 &           0.578372 &           0.657877 &  0.739688 \\
+                 50 &           0.584122 &           0.654597 &  0.739786 \\
+                 60 &           0.584938 &           0.653307 &  0.739417 \\
+                 70 &           0.587008 &           0.654857 &  0.740949 \\
 \bottomrule
 \end{tabular}
 \legend{Fonte: Autor.}
