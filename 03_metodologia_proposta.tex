@@ -4,7 +4,7 @@ Neste capítulo pretende-se detalhar melhor o problema a ser resolvido. Posterio
 
 \section{Detalhamento do Problema}
 
-Ao chegar uma nova denúncia através do sistema FalaBR, da OGU, uma equipe de pessoas atua para avaliar as informações presentes na denúncia e decidir se a denúncia está apta a ser apurada ou não. Ou seja, a avaliação da equipe diz respeito a elementos presentes na denúncia que permitem uma apuração dos fatos relatados.
+Ao chegar uma nova denúncia através do sistema Fala.BR, da OGU, uma equipe de pessoas atua para avaliar as informações presentes na denúncia e decidir se a denúncia está apta a ser apurada ou não. Ou seja, a avaliação da equipe diz respeito a elementos presentes na denúncia que permitem uma apuração dos fatos relatados.
 
 Em geral, estes elementos estão centrados em informações como CPF, CNPJ, Contratos e Convênios entre órgãos públicos e empresas privadas, materialidade (valores monetários descritos na denúncia ou identificados nos contratos e convênios). Com tais informações, a equipe de triagem de denúncias decide se deverá haver apuração (denúncia apta) ou não (denúncia não apta).
 
@@ -53,7 +53,7 @@ Desta forma, configurou-se um servidor com a ferramenta instalada na forma de um
 
 \subsection{Extração de Dados Estruturados}
 
-A extração de dados estruturados é a tentativa de identificar certas entidades de interesse no conteúdo do texto da denúncia e seus anexos. As entidades de interesse, neste momento são CPF, CNPJ, convênios, contratos, NIS, nomes de pessoas, palavras fortes e valores.
+A extração de dados estruturados é a tentativa de identificar certas entidades de interesse no conteúdo do texto da denúncia e seus anexos. As entidades de interesse, neste momento são CPF, CNPJ, convênios, contratos, NIS, nomes de pessoas, palavras fortes (palavras que indicam cenários específicos como superfaturamento, fraude, roubo, desvio, etc. ...) e valores.
 
 Apesar de haver diversas formas de reconhecimento de entidades nomeadas, por questões de escopo e tempo, decidiu-se realizar a extração destas informações utilizando expressões regulares. A implementação de regras com expressões regulares para as entidades citadas acima, é simples na maioria dos casos e não exigem um treinamento como no caso dos algoritmos mencionados no \autoref{chapter:revisao_bibliografica}.
 
@@ -86,8 +86,8 @@ As qualificações encontradas podem ser utilizadas como \textit{features} das d
 
 Esta etapa consiste na consolidação, em \textit{features} ou características, de todas as informações encontradas nas etapas anteriores. Assim, realiza-se um agrupamento por origem de informações. Algumas características como materialidade são somadas outras como CPF de servidor público são contabilizadas. Dessa forma, para cada denúncia, há um registro com uma quantidade grande de colunas nas quais consolidam-se todas as informações encontradas nas etapas anteriores. Por fim, inclui-se o rótulo. A \autoref{tab_00100_visao_geral_dataset} apresenta uma visão em alto nível de como o \textit{dataset} é montado bem como uma explicação da origem de algumas \textit{features} e sua forma de consolidação. 
 
-
-\begin{table}[htbp]
+\FloatBarrier
+\begin{table}[H]
 \caption{Visão geral do dataset após o processamento das denúncias}
 \label{tab_00100_visao_geral_dataset}
 \tiny

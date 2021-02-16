@@ -1,6 +1,6 @@
 \section{Considerações Iniciais}
 
-Neste capítulo, serão descritos os recursos de hardware e software utilizados, os experimentos realizados, métricas utilizadas e o modelo escolhido. Por fim, serão exibidos alguns resultados obtidos a partir da utilização do modelo selecionado aplicado em dados reais.
+Neste capítulo, serão descritos os recursos de hardware e software utilizados, o detalhamento da metodologia utilizada, os experimentos realizados, as métricas utilizadas e o modelo escolhido. Por fim, serão exibidos alguns resultados obtidos a partir da utilização do modelo selecionado aplicado em dados reais.
 
 \section{Recursos Utilizados}
 \label{section:recursos_utilizados}
@@ -37,6 +37,15 @@ Como mencionado na \autoref{fig_00100_quantidade_denuncias}, a distribuição de
     \end{center}
 \legend{Fonte: Autor.}
 \end{figure}
+
+Neste estudo, não há a necessidade de análise e tratamento de dados faltantes. A razão para isso é que todas as informações são obtidas a partir dos textos e anexos das denúncias. Assim, no caso de textos curtos com poucas informações e nenhum anexo a denúncia tende a ser rejeitada, por que poucos ou nenhum dado estruturado é extraído e o próprio texto não traz elementos suficientes para uma apuração. Assim, a maior parte ou todas as \textit{features} de dados estruturados acabam tendo o seu valor zerado. Além disso o TF-IDF gerado para o modelo textual tende a trazer a maior parte de suas \textit{features} com valores baixos ou zerados.
+
+\subsection{Definições Metodológicas}
+\label{section:definicoes_metodologicas}
+
+Conforme já informado no \autoref{chapter:metodologia_proposta}, o \textit{dataset} utilizado possui 1489 registros de denúncias rotuladas como apuráveis (aptas) ou não apuráveis (não aptas). Assim, separou-se 80\% (1191) dos registros em um \textit{dataset} de treinamento e 20\% dos registros (298) em um \textit{dataset} de testes. Além disso, a separação em conjuntos de treinamento e testes foi estratificada, isto é, manteve-se a mesma proporção de registros do \textit{dataset} original, para as classes positiva (apurável) e negativa (não apurável), em ambos os conjuntos.
+
+Todos os procedimentos relacionados a seleção de \textit{features}, seleção de modelos e \textit{tunning} de hiper-parâmetros foram realizados utilizando-se o \textit{dataset} de treinamento e as avaliações de desempenho foram realizadas utilizando-se validação cruzada no próprio \textit{dataset} de treinamento. O \textit{dataset} de testes foi utilizado apenas para aferir os scores finais dos modelos.
 
 \subsection{Modelo considerando apenas os dados estruturados}
 \label{section:modelo_dados_estruturados}
@@ -107,7 +116,7 @@ A \autoref{fig_00400_comparacao_score_modelos_dados_estr} apresenta um gráfico 
 \legend{Fonte: Autor.}
 \end{figure}
 
-O algoritmo escolhido foi o \textit{RandomForestClassifier}, por apresentar o melhor desempenho pela métrica escolhida. Além disso, o algoritmo também performou bem nas outras três métricas avaliadas. 
+O algoritmo escolhido foi o \textit{RandomForestClassifier}, por apresentar o melhor desempenho pela métrica escolhida. Além disso, o algoritmo também teve uma boa performance nas outras três métricas avaliadas. 
 
 O passo seguinte foi a otimização dos hiper-parâmetros. Utilizou-se a biblioteca \textit{skopt} para realizar uma busca automática. Por fim, um novo modelo foi treinado utilizando-se os parâmetros selecionados e todos os dados de treinamento. A \autoref{tab_00300_desempenho_final_modelo_dados_estr} apresenta a matriz de confusão e a \autoref{tab_00400_desempenho_final_modelo_dados_estr} apresenta o relatório de classificação, provenientes das previsões do modelo para os dados de teste.
 
